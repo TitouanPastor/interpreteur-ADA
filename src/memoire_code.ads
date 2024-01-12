@@ -1,14 +1,13 @@
-package memoire_code is
+package Memoire_Code is
 
-   --type T_quadruple is private;
-   
-   
-   
-   
+   type T_Valeur_Element is private;
+
+   type T_Quadruple is array(1..4) of T_Valeur_Element;
+
 private
-   
-   type T_quadruple;
-   
-   type T_code_memoire is array (Integer range <>) of T_quadruple;
+   type T_Valeur_Element is record
+        typeVal : Unbounded_String;
+        valeur : Unbounded_String;
+    end record;
 
-end memoire_code;
+end Memoire_Code;
