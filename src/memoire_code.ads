@@ -19,10 +19,36 @@ package Memoire_Code is
       nbElements  : Integer; -- NbElements >= 0
    end record;
    
+   -- Nom fonction : InsererInstruction
+
+   -- Sémantique : Insère une instruction dans la mémoire du code intermédiaire
+
+   -- Paramètres :
+   --    - memoireCode : in out T_Memoire_Code --> la mémoire du code intermédiaire
+   --    - case1 : Integer --> le premier élément de l'instruction à insérer
+   --    - case2 : Integer --> le deuxième élément de l'instruction à insérer
+   --    - case3 : Integer --> le troisième élément de l'instruction à insérer
+   --    - case4 : Integer --> le quatrième élément de l'instruction à insérer
+   --    - case5 : Integer --> le cinquième élément de l'instruction à insérer
+   --    - case6 : Integer --> le sixième élément de l'instruction à insérer
+
+   -- Pre  => memoire /= null & memoire.nbElements < TAILLE_MEMOIRE_CODE,
+   -- Post => memoire.nbElements = memoire.nbElements'last + 1;
    procedure InsererInstruction(memoireCode : in out T_Memoire_Code; case1 : in Integer; 
                                 case2 : in Integer; case3 : in Integer; case4 : in Integer; 
                                 case5 : in Integer; case6 : in Integer);
-   
+
+
+      -- Nom fonction : GetInstruction
+
+   -- Sémantique : Récupère une instruction dans la mémoire du code intermédiaire
+
+   -- Paramètres :
+   --    - memoireCode : in out T_Memoire_Code --> la mémoire du code intermédiaire
+   --    - cp : in --> le compteur de programme pointant sur l'instruction à récupérer
+
+   -- Pre  => memoire /= null & cp >= 0 & cp <= memoire.nbElements,
+   -- Post => GetInstruction'Result /= null;
    function GetInstruction(memoireCode : in T_Memoire_Code; cp : in Integer) return T_Memoire_Code_Tab;
 
 private

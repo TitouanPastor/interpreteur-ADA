@@ -10,12 +10,43 @@ package tas is
       nbElements : Integer;  -- Nombre d'éléments actuellement dans le tas
    end record;
 
-   -- set nbelements a 0
-   procedure InitialiserTas(tas : out T_Tas);
 
-   procedure AjouterVariable(indice : in Integer; valeur : in Integer);
+   -- Nom fonction : InitialiserTas
 
-   function GetVariable ( indice : in Integer) return Integer;
+   -- Sémantique : Initialise le tas en mettant le nombre d'éléments à 0
+
+   -- Paramètres :
+   --   tas : le tas à initialiser
+
+   -- Pre  => rien,
+   -- Post => tas.nbElements = 0;
+   procedure InitialiserTas (tas : out T_Tas);
+
+
+   -- Nom fonction : AjouterVariable
+
+   -- Sémantique : Ajoute une variable au tas
+
+   -- Paramètres :
+   --   tas    : le tas dans lequel on ajoute la variable
+   --   indice : l'indice de la variable à ajouter
+
+   -- Pre  => 1 <= indice <= CAPACITE,
+   -- Post => tas.nbElements = tas.nbElements'last + 1 & GetVariable (indice) = valeur;
+   procedure AjouterVariable (indice : in Integer; valeur : in Integer);
+
+
+   -- Nom fonction : GetVariable
+
+   -- Sémantique : Retourne la valeur de la variable à l'indice donné
+
+   -- Paramètres :
+   --   tas    : le tas dans lequel on ajoute la variable
+   --   indice : l'indice de la variable à ajouter
+
+   -- Pre  => 1 <= indice <= CAPACITE,
+   -- Post => GetVariable'Result /= null;
+   function GetVariable (indice : in Integer) return Integer;
 
 private
 
