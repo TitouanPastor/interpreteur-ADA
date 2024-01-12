@@ -2,7 +2,7 @@ project Interpreteur is
 
    for Source_Dirs use ("src");
    for Object_Dir use "obj";
-   for Main use ("main.adb", "tests_interpreteur.adb");
+   for Main use ("tests_interpreteur.adb", "tests_memoire_code.adb", "tests_parseur.adb", "tests_tas.adb");
 
    package Ide is
       for Vcs_Kind use "git";
