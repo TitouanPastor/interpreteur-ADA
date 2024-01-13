@@ -52,7 +52,7 @@ procedure tests_interpreteur is
       InsererInstruction(mem,1,0,5,1,0,3);
       TraiterAffectation(GetInstruction(mem,cp), tas, cp);
       Assert(cp = 2, "Erreur test_TraiterAffectation CP");
-      Assert(GetVariable(1) = 8, "Erreur test_TraiterAffectation GetVariable(1) /= 8");
+      Assert(GetVariable(tas, 1) = 8, "Erreur test_TraiterAffectation GetVariable(1) /= 8");
    end test_TraiterAffectation;
    
    

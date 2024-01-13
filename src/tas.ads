@@ -16,7 +16,7 @@ package tas is
    -- Sémantique : Initialise le tas en mettant le nombre d'éléments à 0
 
    -- Paramètres :
-   --   tas : le tas à initialiser
+   --   tas : out T_Tas --> le tas à initialiser
 
    -- Pre  => rien,
    -- Post => tas.nbElements = 0;
@@ -28,12 +28,12 @@ package tas is
    -- Sémantique : Ajoute une variable au tas
 
    -- Paramètres :
-   --   tas    : le tas dans lequel on ajoute la variable
-   --   indice : l'indice de la variable à ajouter
+   --   tas    : in out T_Tas --> le tas dans lequel on ajoute la variable
+   --   valeur : in Integer   --> la valeur de la variable à ajouter
 
    -- Pre  => 1 <= indice <= CAPACITE,
    -- Post => tas.nbElements = tas.nbElements'last + 1 & GetVariable (indice) = valeur;
-   procedure AjouterVariable (indice : in Integer; valeur : in Integer);
+   procedure AjouterVariable (tas : in out T_Tas; valeur : in Integer);
 
 
    -- Nom fonction : GetVariable
@@ -41,12 +41,28 @@ package tas is
    -- Sémantique : Retourne la valeur de la variable à l'indice donné
 
    -- Paramètres :
-   --   tas    : le tas dans lequel on ajoute la variable
-   --   indice : l'indice de la variable à ajouter
+   --   tas    : in T_Tas    --> le tas dans lequel on ajoute la variable
+   --   indice : in Integer  --> l'indice de la variable à ajouter
+
+   -- retour :
+   --  Integer --> la valeur de la variable à l'indice donné
 
    -- Pre  => 1 <= indice <= CAPACITE,
    -- Post => GetVariable'Result /= null;
-   function GetVariable (indice : in Integer) return Integer;
+   function GetVariable (tas : in T_Tas; indice : in Integer) return Integer;
+
+   -- Nom fonction : GetNbElements
+
+   -- Sémantique : Retourne le nombre d'éléments actuellement dans le tas
+
+   -- Paramètres :
+   --   tas    : in T_Tas    --> le tas dans lequel on ajoute la variable
+
+   -- retour :
+   --  Integer --> le nombre d'éléments actuellement dans le tas
+
+   -- Post => 1 <= GetNbElements'Result <= CAPACITE;
+   function GetNbElements (tas : in T_Tas) return Integer;
 
 private
 
