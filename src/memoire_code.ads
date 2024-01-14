@@ -25,10 +25,10 @@ package Memoire_Code is
    -- Sémantique : Initialise la mémoire du code intermédiaire
 
    -- Paramètres :
-   --    - tas : out T_Tas --> la mémoire du code intermédiaire
+   --    - memoireCode : out T_Memoire_Code --> la mémoire du code intermédiaire
 
    -- Pre  => rien,
-   -- Post => memoireCode.nbElements = 0;
+   -- Post => memoireCode.nbLignes = 0;
    procedure InitialiserMemoireCode (memoireCode : out T_Memoire_Code);
 
 
