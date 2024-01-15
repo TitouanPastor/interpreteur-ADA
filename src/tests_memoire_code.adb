@@ -1,5 +1,7 @@
 with Memoire_Code; use Memoire_Code;
 with Ada.Assertions; use Ada.Assertions;
+with Ada.Text_IO; use Ada.Text_IO;
+with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
 
 procedure tests_memoire_code is
 
@@ -20,7 +22,7 @@ procedure tests_memoire_code is
       procedure test_InsererInstruction is
          memoire : T_Memoire_Code;
       begin
-         InitialiserMemoireCode(Memoire);
+         InitialiserMemoireCode(memoire);
          InsererInstruction(memoire, 1, 1, 1, 1, 1, 1);
          Assert(GetCaseInstruction(GetInstruction(memoire, 1), 1) = 1, "Erreur test_InsererInstruction");
       end test_InsererInstruction;

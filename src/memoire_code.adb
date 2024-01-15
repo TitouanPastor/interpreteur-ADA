@@ -1,4 +1,6 @@
-pragma Ada_2012;
+with Ada.Text_IO;         use Ada.Text_IO;
+with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
+
 package body Memoire_Code is
 
   ----------------------------
@@ -7,7 +9,8 @@ package body Memoire_Code is
 
   procedure InitialiserMemoireCode (memoireCode : out T_Memoire_Code) is
   begin
-    memoireCode.nbInstructions := 0;
+    memoireCode.instructions_tab := (others => (0, 0, 0, 0, 0, 0));
+    memoireCode.nbInstructions   := 0;
   end InitialiserMemoireCode;
 
   ------------------------
@@ -22,7 +25,7 @@ package body Memoire_Code is
     instruction : T_Instruction;
   begin
     instruction := (case1, case2, case3, case4, case5, case6);
-    memoireCode.instructions_tab (memoireCode.nbInstructions) := instruction;
+    memoireCode.instructions_tab (memoireCode.nbInstructions + 1) := instruction;
     memoireCode.nbInstructions := memoireCode.nbInstructions + 1;
   end InsererInstruction;
 
