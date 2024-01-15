@@ -15,7 +15,7 @@ package Memoire_Code is
 
    -- Définition du type T_Memoire qui représente la mémoire globale utilisée pour stocker le code intermédiaire
    type T_Memoire_Code is record
-      memoireCode_Tab : T_Memoire_Code_Tab;
+      instructions_tab : T_Memoire_Code_Tab;
       nbInstructions  : Integer; -- nbLignes >= 0
    end record;
    
