@@ -1,9 +1,10 @@
 with tas;          use tas;
 with Memoire_Code; use Memoire_Code;
---with parseur; use parseur;
+with parseur; use parseur;
 with interpreteur;        use interpreteur;
 with Ada.Text_IO;         use Ada.Text_IO;
 with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
+with Dico_entiers; use Dico_entiers;
 
 procedure main is
 
@@ -42,6 +43,7 @@ procedure main is
    mem : T_Memoire_Code;
    tas : T_Tas;
    cp  : Integer;
+   dico : Integer_Hashed_Maps.Map;
 
 begin
 
@@ -51,6 +53,7 @@ begin
 
    -- Genere les mémoires tas et code
    GenererMemoires (mem, tas);
+   FichierToMemoire("test.txt", tas, mem, dico);
 
    -- Parser le fichier txt du code intermédiaire pour le mettre en mémoire
    while cp <= getNbInstructions (mem) loop
