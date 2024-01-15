@@ -1,3 +1,6 @@
+with Ada.Text_IO; use Ada.Text_IO;
+with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
+
 package body interpreteur is
 
    --------------------
@@ -45,6 +48,7 @@ package body interpreteur is
       else
          CP := CP + 1;
       end if;
+      
    end TraiterIF;
 
 
@@ -69,11 +73,14 @@ package body interpreteur is
       y := GetCaseInstruction (instruction, 6);
       -- Cas d'un indice de variable du tas
       if GetCaseInstruction (instruction, 5) = 1 then
-         y := GetVariable (tas, GetCaseInstruction (instruction, y));
+         Put_Line("Récupération variable y : ");
+         Put("Index dans tab : "); Put_Line(y'Image);
+         y := GetVariable (tas, y);
+         Put("valeur y : "); Put_Line(y'Image);
       end if;
-
+      
       -- Selon l'opération
-      case GetCaseInstruction (instruction, 1) is
+      case GetCaseInstruction (instruction, 4) is
          when 1 =>
             ModifierVariable (tas, GetCaseInstruction (instruction, 1), x + y);
          when 2 =>
@@ -100,6 +107,7 @@ package body interpreteur is
          when others =>
             null;
       end case;
+      
    end TraiterOperation;
 
 
@@ -116,9 +124,14 @@ package body interpreteur is
 
       -- On récupère la première valeur x
       x := GetCaseInstruction (instruction, 3);
+      
+      Put_Line(x'Image);
       -- Cas d'un indice de variable du tas
       if GetCaseInstruction (instruction, 2) = 1 then
-         x := GetVariable (tas, GetCaseInstruction (instruction, x));
+         Put_Line("Récupération variable x : ");
+         Put("Index dans tab : "); Put_Line(x'Image);
+         x := GetVariable (tas, x);
+         Put("valeur x :"); Put_Line(x'Image);
       end if;
 
       case GetCaseInstruction (instruction, 4) is
