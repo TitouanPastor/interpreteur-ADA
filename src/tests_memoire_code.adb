@@ -9,7 +9,7 @@ procedure tests_memoire_code is
          memoire : T_Memoire_Code;
       begin
          InitialiserMemoireCode(memoire);
-         Assert(GetNbLignes(memoire) = 0, "Erreur test_InitialiserMemoire");
+         Assert(GetNbInstructions(memoire) = 0, "Erreur test_InitialiserMemoire");
       end test_InitialiserMemoire;
 
       -- Test 2 :
@@ -37,16 +37,16 @@ procedure tests_memoire_code is
       end test_GetInstruction;
 
       -- Test 4 :
-      -- test de la procedure GetNbLignes (memoire : in T_Memoire_Code) return Integer;
+      -- test de la procedure GetNbInstructions (memoire : in T_Memoire_Code) return Integer;
       -- Ajout de lignes dans la mémoire
-      procedure test_GetNbLignes is
+      procedure test_GetNbInstructions is
          memoire : T_Memoire_Code;
       begin
          InitialiserMemoireCode(Memoire);
          InsererInstruction(memoire, 1, 1, 1, 1, 1, 1);
          InsererInstruction(memoire, 2, 2, 2, 2, 2, 2);
-         Assert(GetNbLignes(memoire) = 2, "Erreur test_GetNbLignes");
-      end test_GetNbLignes;
+         Assert(GetNbInstructions(memoire) = 2, "Erreur test_GetNbInstructions");
+      end test_GetNbInstructions;
 
       -- Test 5 :
       -- test de la procedure GetCaseInstruction(memoireCode : in T_Memoire_Code; indexCase : in Integer) return Integer;
@@ -63,6 +63,6 @@ procedure tests_memoire_code is
       test_InitialiserMemoire;
       test_InsererInstruction;
       test_GetInstruction;
-      test_GetNbLignes;
+      test_GetNbInstructions;
       test_GetCaseInstruction;
    end tests_memoire_code;

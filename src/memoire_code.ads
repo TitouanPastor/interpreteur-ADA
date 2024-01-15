@@ -7,16 +7,16 @@ package Memoire_Code is
    -- Taille (donc nombre de lignes d'instructions) de la mémoire utilisée pour stocker le code intermédiaire
    TAILLE_MEMOIRE_CODE : Integer := 500;
 
-   -- Définition du type T_Ligne qui représente une ligne d'instruction du code intermédiaire
-   type T_Ligne is private;
+   -- Définition du type T_Instruction qui représente une ligne d'instruction du code intermédiaire
+   type T_Instruction is private;
 
    -- Définition du type T_Memoire_Code_Tab qui représente la mémoire du code intermédiaire sous forme de tableau de lignes d'instructions
    type T_Memoire_Code_Tab is private;
 
    -- Définition du type T_Memoire qui représente la mémoire globale utilisée pour stocker le code intermédiaire
    type T_Memoire_Code is record
-      memoireCode : T_Memoire_Code_Tab;
-      nbLignes  : Integer; -- nbLignes >= 0
+      memoireCode_Tab : T_Memoire_Code_Tab;
+      nbInstructions  : Integer; -- nbLignes >= 0
    end record;
    
 
@@ -61,11 +61,11 @@ package Memoire_Code is
    --    - cp : in --> le compteur de programme pointant sur l'instruction à récupérer
 
    -- retour :
-   --    - GetInstruction'Result : T_Ligne --> l'instruction récupérée
+   --    - GetInstruction'Result : T_Instruction --> l'instruction récupérée
 
    -- Pre  => memoire /= null & cp >= 0 & cp <= memoire.nbElements,
    -- Post => GetInstruction'Result /= null;
-   function GetInstruction(memoireCode : in T_Memoire_Code; cp : in Integer) return T_Ligne;
+   function GetInstruction(memoireCode : in T_Memoire_Code; cp : in Integer) return T_Instruction;
 
 
    -- Nom fonction : GetCaseInstruction
@@ -73,7 +73,7 @@ package Memoire_Code is
    -- Sémantique : Récupère une case d'une instruction dans la mémoire du code intermédiaire
 
    -- Paramètres :
-   --    - memoireCode : in T_Ligne --> la ligne d'instruction à récupérer
+   --    - memoireCode : in T_Instruction --> la ligne d'instruction à récupérer
    --    - indexCase : in Integer --> l'index de la case à récupérer
 
    -- retour :
@@ -81,10 +81,10 @@ package Memoire_Code is
 
    -- Pre  => memoire /= null & indexCase >= 0 & indexCase < TAILLE_LIGNE_INSTRUCTION,
    -- Post => GetCaseInstruction'Result /= null;
-   function GetCaseInstruction(instruction : in T_Ligne; indexCase : in Integer) return Integer;
+   function GetCaseInstruction(instruction : in T_Instruction; indexCase : in Integer) return Integer;
 
 
-   -- Nom fonction : getNbLignes
+   -- Nom fonction : getNbInstruction
 
    -- Sémantique : Récupère le nombre de lignes d'instructions dans la mémoire du code intermédiaire
 
@@ -92,18 +92,18 @@ package Memoire_Code is
    --    - memoireCode : in out T_Memoire_Code --> la mémoire du code intermédiaire
 
    -- retour :
-   --    - getNbLignes'Result : Integer --> le nombre de lignes d'instructions dans la mémoire du code intermédiaire
+   --    - getNbInstructions'Result : Integer --> le nombre de lignes d'instructions dans la mémoire du code intermédiaire
 
    -- Pre  => memoire /= null,
-   -- Post => getNbLignes'Result = memoireCode.nbLignes;
-   function getNbLignes(memoireCode : in T_Memoire_Code) return Integer;
+   -- Post => getNbInstructions'Result = memoireCode.NbInstructions;
+   function getNbInstructions(memoireCode : in T_Memoire_Code) return Integer;
 
 private
 
    -- Définition du type T_Ligne comme un tableau de Integer de taille TAILLE_LIGNE_INSTRUCTION
-   type T_Ligne is array (1 .. TAILLE_LIGNE_INSTRUCTION) of Integer;
+   type T_Instruction is array (1 .. TAILLE_LIGNE_INSTRUCTION) of Integer;
 
    -- Définition du type T_Memoire_Code_Tab comme un tableau de T_Ligne de taille TAILLE_MEMOIRE_CODE
-   type T_Memoire_Code_Tab is array (1 .. TAILLE_MEMOIRE_CODE) of T_Ligne;
+   type T_Memoire_Code_Tab is array (1 .. TAILLE_MEMOIRE_CODE) of T_Instruction;
 
 end Memoire_Code;

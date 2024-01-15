@@ -6,7 +6,7 @@ package tas is
    type T_Tab_Tas is private;  -- Type privé pour le tableau du tas
 
    type T_Tas is record -- Type enregistrement pour le tas
-      tas        : T_Tab_Tas;  -- Tableau du tas
+      tas_Tab    : T_Tab_Tas;  -- Tableau du tas
       nbElements : Integer;  -- Nombre d'éléments actuellement dans le tas
    end record;
 
