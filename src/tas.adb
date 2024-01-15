@@ -7,9 +7,8 @@ package body tas is
 
    procedure InitialiserTas (tas : out T_Tas) is
    begin
-      pragma Compile_Time_Warning
-        (Standard.True, "InitialiserTas unimplemented");
-      raise Program_Error with "Unimplemented procedure InitialiserTas";
+      tas.nbElements := 0;
+
    end InitialiserTas;
 
    ---------------------
@@ -18,9 +17,9 @@ package body tas is
 
    procedure AjouterVariable (tas : in out T_Tas; valeur : in Integer) is
    begin
-      pragma Compile_Time_Warning
-        (Standard.True, "AjouterVariable unimplemented");
-      raise Program_Error with "Unimplemented procedure AjouterVariable";
+      tas.tas_Tab(tas.nbElements+1) := valeur;
+      tas.nbElements := tas.nbElements +1;
+
    end AjouterVariable;
 
    -----------------
@@ -29,8 +28,8 @@ package body tas is
 
    function GetVariable (tas : in T_Tas; indice : in Integer) return Integer is
    begin
-      pragma Compile_Time_Warning (Standard.True, "GetVariable unimplemented");
-      return raise Program_Error with "Unimplemented function GetVariable";
+      return tas.tas_Tab(indice);
+
    end GetVariable;
 
    -------------------
@@ -39,9 +38,8 @@ package body tas is
 
    function GetNbElements (tas : in T_Tas) return Integer is
    begin
-      pragma Compile_Time_Warning
-        (Standard.True, "GetNbElements unimplemented");
-      return raise Program_Error with "Unimplemented function GetNbElements";
+     return tas.nbElements;
+
    end GetNbElements;
 
 end tas;

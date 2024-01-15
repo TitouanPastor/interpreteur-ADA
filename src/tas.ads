@@ -31,7 +31,7 @@ package tas is
    --   tas    : in out T_Tas --> le tas dans lequel on ajoute la variable
    --   valeur : in Integer   --> la valeur de la variable à ajouter
 
-   -- Pre  => 1 <= indice <= CAPACITE,
+   -- Pre  => 1 <= tas.nbElements < CAPACITE
    -- Post => tas.nbElements = tas.nbElements'last + 1 & GetVariable (indice) = valeur;
    procedure AjouterVariable (tas : in out T_Tas; valeur : in Integer);
 
