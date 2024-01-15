@@ -26,17 +26,19 @@ procedure tests_interpreteur is
    procedure test_TraiterIF is
       cp  : Integer := 1;
       mem : T_Memoire_Code;
+      tas : T_Tas;
    begin
+      InitialiserTas(tas);
       InitialiserMemoireCode (mem);
       -- la condition est valide (> 0 dans la troisième case)
       InsererInstruction (mem, -2, 0, 8, -1, 0, 5);
-      TraiterIF (GetInstruction (mem, cp), cp);
+      TraiterIF (GetInstruction (mem, cp), tas, cp);
       Assert (cp = 5, "Erreur test_TraiterIF > 0");
 
       -- la condition n'est pas valide (0 dans la troisième case)
       cp := 2;
       InsererInstruction (mem, -2, 0, 0, -1, 0, 5);
-      TraiterIF (GetInstruction (mem, cp), cp);
+      TraiterIF (GetInstruction (mem, cp), tas, cp);
       Assert (cp = 3, "Erreur test_TraiterIF = 0");
    end test_TraiterIF;
 

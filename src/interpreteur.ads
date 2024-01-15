@@ -18,8 +18,9 @@ package interpreteur is
 
    -- Paramètres :
    --    - instruction : T_Instruction in --> instruction courante de l'instruction à traiter (ici récuperer la condition ainsi que le numéro de la ligne)
+   --    - tas : T_tas in out         --> le tas (mémoire) des variables du programme
    --    - CP : Integer in out       --> compteur de ligne, pointant sur l'instruction courante
-   procedure TraiterIF (instruction : in T_Instruction; CP : in out Integer);
+   procedure TraiterIF (instruction : in T_Instruction; tas : in T_Tas; CP : in out Integer);
 
    -- Nom Fonction : TraiterAffectation
 
