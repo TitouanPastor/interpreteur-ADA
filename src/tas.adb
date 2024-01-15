@@ -17,10 +17,17 @@ package body tas is
 
    procedure AjouterVariable (tas : in out T_Tas; valeur : in Integer) is
    begin
-      tas.tas_Tab(tas.nbElements+1) := valeur;
-      tas.nbElements := tas.nbElements +1;
+      tas.tas_Tab (tas.nbElements + 1) := valeur;
+      tas.nbElements                   := tas.nbElements + 1;
 
    end AjouterVariable;
+
+   procedure ModifierVariable
+     (tas : in out T_Tas; indice : in Integer; valeur : in Integer)
+   is
+   begin
+      tas.tas_Tab (indice) := valeur;
+   end ModifierVariable;
 
    -----------------
    -- GetVariable --
@@ -28,7 +35,7 @@ package body tas is
 
    function GetVariable (tas : in T_Tas; indice : in Integer) return Integer is
    begin
-      return tas.tas_Tab(indice);
+      return tas.tas_Tab (indice);
 
    end GetVariable;
 
@@ -38,7 +45,7 @@ package body tas is
 
    function GetNbElements (tas : in T_Tas) return Integer is
    begin
-     return tas.nbElements;
+      return tas.nbElements;
 
    end GetNbElements;
 

@@ -1,4 +1,4 @@
-with Tas; use Tas;
+with tas;            use tas;
 with Ada.Assertions; use Ada.Assertions;
 
 procedure tests_tas is
@@ -8,8 +8,8 @@ procedure tests_tas is
    procedure test_InitialiserTas is
       tas : T_Tas;
    begin
-      InitialiserTas(Tas);
-      Assert(GetNbElements(tas) = 0, "Erreur test_InitialiserTas");
+      InitialiserTas (tas);
+      Assert (GetNbElements (tas) = 0, "Erreur test_InitialiserTas");
    end test_InitialiserTas;
 
    -- Test 2 :
@@ -18,9 +18,9 @@ procedure tests_tas is
    procedure test_AjouterVariable is
       Tas : T_Tas;
    begin
-      InitialiserTas(Tas);
-      AjouterVariable(Tas,1);
-      Assert(GetVariable(tas, 1) = 1, "Erreur test_AjouterVariable");
+      InitialiserTas (Tas);
+      AjouterVariable (Tas, 1);
+      Assert (GetVariable (Tas, 1) = 1, "Erreur test_AjouterVariable");
    end test_AjouterVariable;
 
    -- Test 3 :
@@ -29,9 +29,9 @@ procedure tests_tas is
    procedure test_GetVariable is
       Tas : T_Tas;
    begin
-      InitialiserTas(Tas);
-      AjouterVariable(Tas, 1);
-      Assert(GetVariable(tas, 1) = 1, "Erreur test_GetVariable");
+      InitialiserTas (Tas);
+      AjouterVariable (Tas, 1);
+      Assert (GetVariable (Tas, 1) = 1, "Erreur test_GetVariable");
    end test_GetVariable;
 
    -- Test 4 :
@@ -40,15 +40,28 @@ procedure tests_tas is
    procedure test_GetNbElements is
       Tas : T_Tas;
    begin
-      InitialiserTas(Tas);
-      AjouterVariable(Tas, 1);
-      AjouterVariable(Tas, 2);
-      Assert(GetNbElements(tas) = 2, "Erreur test_GetNbElements");
+      InitialiserTas (Tas);
+      AjouterVariable (Tas, 1);
+      AjouterVariable (Tas, 2);
+      Assert (GetNbElements (Tas) = 2, "Erreur test_GetNbElements");
    end test_GetNbElements;
+
+   --Test 5 :
+   -- test de la procedure ModifierVariable (tas : in out T_Tas; indice : in Integer; valeur : in Integer);
+   -- Ajout d'une variable dans le tas et modification de sa valeur
+   procedure test_ModifierVariable is
+      Tas : T_Tas;
+   begin
+      InitialiserTas (Tas);
+      AjouterVariable (Tas, 1);
+      ModifierVariable (Tas, 1, 2);
+      Assert (GetVariable (Tas, 1) = 2, "Erreur test_ModifierVariable");
+   end test_ModifierVariable;
 
 begin
    test_InitialiserTas;
    test_AjouterVariable;
    test_GetVariable;
    test_GetNbElements;
+   test_ModifierVariable;
 end tests_tas;

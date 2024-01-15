@@ -36,6 +36,20 @@ package tas is
    procedure AjouterVariable (tas : in out T_Tas; valeur : in Integer);
 
 
+   -- Nom fonction : ModifierVariable
+
+   -- Sémantique : Modifie la valeur d'une variable du tas
+
+   -- Paramètres :
+   --   tas    : in out T_Tas --> le tas dans lequel on ajoute la variable
+   --   indice : in Integer   --> l'indice de la variable à modifier
+   --   valeur : in Integer   --> la nouvelle valeur de la variable
+
+   -- Pre  => 1 <= indice <= CAPACITE,
+   -- Post => GetVariable (indice) = valeur;
+   procedure ModifierVariable (tas : in out T_Tas; indice : in Integer; valeur : in Integer);
+
+
    -- Nom fonction : GetVariable
 
    -- Sémantique : Retourne la valeur de la variable à l'indice donné
