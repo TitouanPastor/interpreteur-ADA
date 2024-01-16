@@ -82,6 +82,7 @@ package body interpreteur is
 
       -- Selon l'opération
       case GetCaseInstruction (instruction, 4) is
+         -- arithmétique
          when 1 =>
             ModifierVariable (tas, GetCaseInstruction (instruction, 1), x + y);
          when 2 =>
@@ -91,8 +92,47 @@ package body interpreteur is
          when 4 =>
             ModifierVariable (tas, GetCaseInstruction (instruction, 1), x / y);
          when 6 =>
-            ModifierVariable (tas, GetCaseInstruction (instruction, 1), x mod y);
-            --TODO : more arithmetics cases
+            ModifierVariable
+              (tas, GetCaseInstruction (instruction, 1), x mod y);
+
+            -- Logique
+         when 7 =>
+            if x = y then
+               ModifierVariable (tas, GetCaseInstruction (instruction, 1), 1);
+            else
+               ModifierVariable (tas, GetCaseInstruction (instruction, 1), 0);
+            end if;
+
+         when 8 =>
+            if x < y then
+               ModifierVariable (tas, GetCaseInstruction (instruction, 1), 1);
+            else
+               ModifierVariable (tas, GetCaseInstruction (instruction, 1), 0);
+            end if;
+         when 9 =>
+            if x > y then
+               ModifierVariable (tas, GetCaseInstruction (instruction, 1), 1);
+            else
+               ModifierVariable (tas, GetCaseInstruction (instruction, 1), 0);
+            end if;
+         when 10 =>
+            if x <= y then
+               ModifierVariable (tas, GetCaseInstruction (instruction, 1), 1);
+            else
+               ModifierVariable (tas, GetCaseInstruction (instruction, 1), 0);
+            end if;
+         when 11 =>
+            if x >= y then
+               ModifierVariable (tas, GetCaseInstruction (instruction, 1), 1);
+            else
+               ModifierVariable (tas, GetCaseInstruction (instruction, 1), 0);
+            end if;
+         when 12 =>
+            if x /= y then
+               ModifierVariable (tas, GetCaseInstruction (instruction, 1), 1);
+            else
+               ModifierVariable (tas, GetCaseInstruction (instruction, 1), 0);
+            end if;
          when 14 =>
             if EntierVersBool (x) and EntierVersBool (y) then
                ModifierVariable (tas, GetCaseInstruction (instruction, 1), 1);
