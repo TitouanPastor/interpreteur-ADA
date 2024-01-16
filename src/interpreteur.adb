@@ -1,4 +1,4 @@
-with Ada.Text_IO; use Ada.Text_IO;
+with Ada.Text_IO;         use Ada.Text_IO;
 with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
 
 package body interpreteur is
@@ -16,7 +16,6 @@ package body interpreteur is
          return False;
       end if;
    end EntierVersBool;
-   
 
    -----------------
    -- TraiterGOTO --
@@ -31,7 +30,8 @@ package body interpreteur is
    -- TraiterIF --
    ---------------
 
-   procedure TraiterIF (instruction : in T_Instruction; tas : in T_Tas; CP : in out Integer)
+   procedure TraiterIF
+     (instruction : in T_Instruction; tas : in T_Tas; CP : in out Integer)
    is
       x : Integer; -- Variable temporaire
    begin
@@ -43,19 +43,18 @@ package body interpreteur is
          x := GetVariable (tas, GetCaseInstruction (instruction, x));
       end if;
 
-      if EntierVersBool(x) then
+      if EntierVersBool (x) then
          CP := GetCaseInstruction (instruction, 6);
       else
          CP := CP + 1;
       end if;
-      
-   end TraiterIF;
 
+   end TraiterIF;
 
    ------------------------
    -- TraiterAssignation --
    ------------------------
-   
+
    -- Fonction traitant une assignation simple de la forme a <- x
    procedure TraiterAssignation
      (instruction : in T_Instruction; tas : out T_Tas; x : in Integer)
@@ -73,12 +72,14 @@ package body interpreteur is
       y := GetCaseInstruction (instruction, 6);
       -- Cas d'un indice de variable du tas
       if GetCaseInstruction (instruction, 5) = 1 then
-         Put_Line("Récupération variable y : ");
-         Put("Index dans tab : "); Put_Line(y'Image);
+         Put_Line ("Récupération variable y : ");
+         Put ("Index dans tab : ");
+         Put_Line (y'Image);
          y := GetVariable (tas, y);
-         Put("valeur y : "); Put_Line(y'Image);
+         Put ("valeur y : ");
+         Put_Line (y'Image);
       end if;
-      
+
       -- Selon l'opération
       case GetCaseInstruction (instruction, 4) is
          when 1 =>
@@ -89,6 +90,8 @@ package body interpreteur is
             ModifierVariable (tas, GetCaseInstruction (instruction, 1), x * y);
          when 4 =>
             ModifierVariable (tas, GetCaseInstruction (instruction, 1), x / y);
+         when 6 =>
+            ModifierVariable (tas, GetCaseInstruction (instruction, 1), x mod y);
             --TODO : more arithmetics cases
          when 14 =>
             if EntierVersBool (x) and EntierVersBool (y) then
@@ -107,9 +110,8 @@ package body interpreteur is
          when others =>
             null;
       end case;
-      
-   end TraiterOperation;
 
+   end TraiterOperation;
 
    ------------------------
    -- TraiterAffectation --
@@ -124,14 +126,16 @@ package body interpreteur is
 
       -- On récupère la première valeur x
       x := GetCaseInstruction (instruction, 3);
-      
-      Put_Line(x'Image);
+
+      Put_Line (x'Image);
       -- Cas d'un indice de variable du tas
       if GetCaseInstruction (instruction, 2) = 1 then
-         Put_Line("Récupération variable x : ");
-         Put("Index dans tab : "); Put_Line(x'Image);
+         Put_Line ("Récupération variable x : ");
+         Put ("Index dans tab : ");
+         Put_Line (x'Image);
          x := GetVariable (tas, x);
-         Put("valeur x :"); Put_Line(x'Image);
+         Put ("valeur x :");
+         Put_Line (x'Image);
       end if;
 
       case GetCaseInstruction (instruction, 4) is
