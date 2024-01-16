@@ -44,7 +44,7 @@ package parseur is
 
    -- Pre  => rien,
    -- Post => tabMotLigne.nbElements = 0;
-   procedure InitialiserTabMot (tabMot : out T_Tab_Mot);
+   procedure InitialiserTabMot (tabMot : out T_Mot);
 
 
    -- Nom fonction : LigneToTabMot
@@ -52,12 +52,12 @@ package parseur is
    -- Sémantique : Prend une ligne en entrée et retourne le tableau TabMot dans lequel il y a un mot de la ligne par case
 
    -- Paramètres :
-   --    - ligneCourante : in String --> la ligne du code intermédiaire qu'il faut mettre sous forme de mots
+   --    - ligneCourante : in Unbounded_String --> la ligne du code intermédiaire qu'il faut mettre sous forme de mots
    --    - tabMot : le tableau de mot correspondant à la ligne
 
    -- Pre  => rien,
    -- Post => ligneCourante non vide
-   procedure LigneToTabMot (ligneCourante : in String; tabMot : out T_Tab_Mot );
+   procedure LigneToTabMot (ligneCourante : in Unbounded_String; tabMot : out T_Mot );
 
 
      -- Nom fonction : InitialisercntVar
@@ -76,7 +76,7 @@ package parseur is
    private
 
    type T_Tab_Mot is
-     array (1 .. CAPACITE) of String;  -- Définition du type tableau de mots
+     array (1 .. CAPACITE) of Unbounded_String;  -- Définition du type tableau de mots
 
 
 
