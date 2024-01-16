@@ -1,0 +1,60 @@
+R0 : Comment parser un fichier .txt de code intermédiaire
+
+R1 : Comment R0
+    Initialiser le tableau de mots tab
+    Initialiser le compteur cntVar du nombre de variables a 1
+    Initialiser la table de correspondance (dictionnaire) entre les noms des variables et leurs addresses dans le tas
+    Ouvrir le fichier
+    Tant que ce n'est pas la fin du fichier faire 
+        A1 : Pour chaque ligne, on récupère sous forme d'un tableau de mots les mots
+        A2 : On traite la ligne courante
+    Fin Tant que
+
+R2 : Comment A1
+
+    i := 1
+    Tant que ce n'est pas la fin de la ligne faire
+        On récupère le mot courant
+        On l'ajoute au tableau de mots tab(i)
+        i++
+    Fin Tant que
+
+R2 : Comment A2
+
+    Si le premier mot est "Programme" alors
+        Tant que le premier mot n'est pas "begin" alors
+            On récupère la ligne suivante
+            On récupère sous forme d'un tableau de mots les mots (R2)
+            B1 : On ajoute les variables au tas
+        Fin Tant que
+    Sinon
+        Tant que le premier mot n'est pas end alors
+        On récupère la ligne suivante
+        On récupère sous forme d'un tableau de mots les mots (R2)
+        B2 : On traite la ligne d'instruction courante
+    fin si
+
+R3 : Comment B1
+    
+    Tant que le mot courant n'est pas ":" faire
+        On ajoute dans la table de correspondance le mot courant SANS LA VIRGULE à l'adresse courante cntVar
+        On ajoute dans le tas une variable à 0 (elle est à l'indice cntVar)
+        On incrémente cntVar
+    fin Tant que
+
+R3 : Comment B2
+
+    On skip tab(1) (le premier mot est le numéro de la ligne)
+    Si tab(3) = "<-" alors
+        Si tab(5) contient un mot alors // c'est une operation binaire
+            C1 : On ajoute dans la memoire du code l'instruction avec les 6 cases mémoires
+        Sinon // c'est une affectation simple
+            On ajoute dans la memoire du code l'instruction avec les 4 cases mémoires (comme C1)
+        fin si
+    Sinon si tab(2) = "IF" alors
+        On ajoute dans la memoire du code l'instruction avec les 6 cases mémoires
+    Sinon si tab(2) = "GOTO" alors
+        On ajoute dans la memoire du code l'instruction avec les 2 cases mémoires
+    Sinon si tab(2) = "NULL" alors
+        On ajoute dans la memoire du code l'instruction avec la cases mémoire -3
+    fin si
