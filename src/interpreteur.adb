@@ -40,7 +40,9 @@ package body interpreteur is
       x := GetCaseInstruction (instruction, 3);
       -- Cas d'un indice de variable du tas
       if GetCaseInstruction (instruction, 2) = 1 then
-         x := GetVariable (tas, GetCaseInstruction (instruction, x));
+         Put_Line ("Index " & x'Image);
+         x := GetVariable (tas, x);
+         Put_Line ("Value " & x'Image);
       end if;
 
       if EntierVersBool (x) then
@@ -134,14 +136,13 @@ package body interpreteur is
                ModifierVariable (tas, GetCaseInstruction (instruction, 1), 0);
             end if;
          when 14 =>
-            if EntierVersBool (x) and EntierVersBool (y) then
+            if EntierVersBool (x) or EntierVersBool (y) then
                ModifierVariable (tas, GetCaseInstruction (instruction, 1), 1);
             else
                ModifierVariable (tas, GetCaseInstruction (instruction, 1), 0);
             end if;
-
          when 15 =>
-            if EntierVersBool (x) or EntierVersBool (y) then
+            if EntierVersBool (x) and EntierVersBool (y) then
                ModifierVariable (tas, GetCaseInstruction (instruction, 1), 1);
             else
                ModifierVariable (tas, GetCaseInstruction (instruction, 1), 0);

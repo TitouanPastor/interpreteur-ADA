@@ -61,4 +61,19 @@ package body Memoire_Code is
     return memoireCode.nbInstructions;
   end getNbInstructions;
 
+  -----------------------
+  -- AfficherMemoireCode --
+  -----------------------
+
+  procedure AfficherInstruction (instruction : in T_Instruction) is
+  begin
+    Put (GetCaseInstruction (instruction, 1),3);
+    Put (GetCaseInstruction (instruction, 2),3);
+    Put (GetCaseInstruction (instruction, 3),3);
+    Put (GetCaseInstruction (instruction, 4),3);
+    Put (GetCaseInstruction (instruction, 5),3);
+    Put (GetCaseInstruction (instruction, 6),3);
+    Put_Line ("");
+  end AfficherInstruction;
+
 end Memoire_Code;

@@ -76,9 +76,7 @@ package body parseur is
       map.Include ("-", 2);
       map.Include ("*", 3);
       map.Include ("/", 4);
-      map.Include
-        ("->",
-         5); -- l'assignation dans le code intermédiaire est en fait l'absence de signe d'opération
+      map.Include ("->", 5);
       map.Include ("%", 6);
       map.Include ("=", 7);
       map.Include ("<", 8);
@@ -99,15 +97,15 @@ package body parseur is
      (chemin      : in String; tas : out T_Tas; memCode : out T_Memoire_Code;
       mapVariable :    out Integer_Hashed_Maps.Map)
    is
-      Fichier       : File_Type;
-      Ligne         : Unbounded_String;
-      tabMots       : T_Mot;
-      i             : Integer;
+      Fichier                  : File_Type;
+      Ligne                    : Unbounded_String;
+      tabMots                  : T_Mot;
+      i                        : Integer;
       x, y : Integer; -- valeur dans les opérations x <- y op z avec y et z pouvant etre des variables ou des constantes
       xIsVariable, yIsVariable : Integer;
-      cntVar        : Integer;
-      tempNomVar    : Unbounded_String;
-      mapOperations : Integer_Hashed_Maps.Map;
+      cntVar                   : Integer;
+      tempNomVar               : Unbounded_String;
+      mapOperations            : Integer_Hashed_Maps.Map;
 
    begin
 
@@ -195,6 +193,7 @@ package body parseur is
 
                -- On traite la ligne d'instruction
                -- Si le premier terme de la ligne (en skippant le num de ligne) est une variable
+               -- OPERATION
                if mapVariable.Contains (To_String (tabMots.tabMotLigne (2)))
                then
                   Put_Line ("-> OPE");
@@ -204,7 +203,7 @@ package body parseur is
                      x := mapVariable (To_String (tabMots.tabMotLigne (4)));
                      xIsVariable := 1;
                   else
-                     x := Integer'Value(To_String(tabMots.tabMotLigne (4)));
+                     x := Integer'Value (To_String (tabMots.tabMotLigne (4)));
                      xIsVariable := 0;
                   end if;
 
@@ -212,24 +211,28 @@ package body parseur is
                   if tabMots.nbElements = 4 then
                      InsererInstruction
                        (memCode,
-                        mapVariable (To_String (tabMots.tabMotLigne (2))), xIsVariable,x,
-                        mapOperations ("->"), 0, 0);
+                        mapVariable (To_String (tabMots.tabMotLigne (2))),
+                        xIsVariable, x, mapOperations ("->"), 0, 0);
                   else -- Sinon on regarde la seconde opérande
 
-                  if mapVariable.Contains (To_String (tabMots.tabMotLigne (6)))
-                  then
-                     y := mapVariable (To_String (tabMots.tabMotLigne (6)));
-                     yIsVariable := 1;
-                  else
-                     y := Integer'Value(To_String(tabMots.tabMotLigne (6)));
-                     yIsVariable := 0;
-                  end if;
+                     if mapVariable.Contains
+                         (To_String (tabMots.tabMotLigne (6)))
+                     then
+                        y := mapVariable (To_String (tabMots.tabMotLigne (6)));
+                        yIsVariable := 1;
+                     else
+                        y :=
+                          Integer'Value (To_String (tabMots.tabMotLigne (6)));
+                        yIsVariable := 0;
+                     end if;
                      InsererInstruction
                        (memCode,
-                        mapVariable (To_String (tabMots.tabMotLigne (2))), xIsVariable,x,
-                        mapOperations(To_String (tabMots.tabMotLigne (5))), yIsVariable, y);
+                        mapVariable (To_String (tabMots.tabMotLigne (2))),
+                        xIsVariable, x,
+                        mapOperations (To_String (tabMots.tabMotLigne (5))),
+                        yIsVariable, y);
                   end if;
-
+                  -- GOTO
                elsif tabMots.tabMotLigne (2) = To_Unbounded_String ("GOTO")
                then
                   Put_Line ("-> GOTO");
@@ -238,6 +241,7 @@ package body parseur is
                      Integer'Value (To_String (tabMots.tabMotLigne (3))), 0, 0,
                      0);
 
+                  -- IF
                elsif tabMots.tabMotLigne (2) = To_Unbounded_String ("IF") then
                   Put_Line ("-> IF");
                   if mapVariable.Contains (To_String (tabMots.tabMotLigne (3)))
@@ -245,14 +249,16 @@ package body parseur is
                      InsererInstruction
                        (memCode, -2, 1,
                         mapVariable (To_String (tabMots.tabMotLigne (3))), 0,
-                        0, Integer'Value(To_String (tabMots.tabMotLigne (6))));
+                        0,
+                        Integer'Value (To_String (tabMots.tabMotLigne (5))));
                   else
                      InsererInstruction
                        (memCode, -2, 0,
                         Integer'Value (To_String (tabMots.tabMotLigne (3))), 0,
-                        0, 0);
+                        0, Integer'Value (To_String (tabMots.tabMotLigne (5))));
                   end if;
 
+                  -- NULL
                elsif tabMots.tabMotLigne (2) = To_Unbounded_String ("NULL")
                then
                   Put_Line ("-> NULL");
@@ -260,7 +266,6 @@ package body parseur is
 
                else
                   Put_Line ("-> Non reconnu");
-
                end if;
 
                -- On récupère la ligne suivante

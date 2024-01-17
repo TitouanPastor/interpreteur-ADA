@@ -1,10 +1,10 @@
-with tas;          use tas;
-with Memoire_Code; use Memoire_Code;
-with parseur; use parseur;
+with tas;                 use tas;
+with Memoire_Code;        use Memoire_Code;
+with parseur;             use parseur;
 with interpreteur;        use interpreteur;
 with Ada.Text_IO;         use Ada.Text_IO;
 with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
-with Map_entiers; use Map_entiers;
+with Map_entiers;         use Map_entiers;
 
 procedure main is
 
@@ -40,9 +40,9 @@ procedure main is
 
    end GenererMemoires;
 
-   mem : T_Memoire_Code;
-   tas : T_Tas;
-   cp  : Integer;
+   mem  : T_Memoire_Code;
+   tas  : T_Tas;
+   cp   : Integer;
    dico : Integer_Hashed_Maps.Map;
 
 begin
@@ -53,21 +53,13 @@ begin
 
    -- Genere les mémoires tas et code
    -- GenererMemoires (mem, tas);
-   FichierToMemoire("test.txt", tas, mem, dico);
+   FichierToMemoire ("fact.txt", tas, mem, dico);
 
    -- Parser le fichier txt du code intermédiaire pour le mettre en mémoire
    while cp <= getNbInstructions (mem) loop
 
-      --Affichage de cp et de la memoire tas
-      Put_Line (" ");
-      Put ("Cp = ");
-      Put_Line (cp'Image);
-
-      -- affichage du tas
-      Put_Line ("Tas : ");
-      for i in 1 .. GetNbElements (tas) loop
-         Put_Line (i'Image & " : " & GetVariable (tas, i)'Image);
-      end loop;
+      Put_Line("####################");
+      AfficherInstruction(GetInstruction (mem, cp));
 
       -- A1 : Traiter la ligne du code intermédiaire
       case GetCaseInstruction (GetInstruction (mem, cp), 1) is
@@ -89,10 +81,17 @@ begin
             TraiterAffectation (GetInstruction (mem, cp), tas, cp);
 
       end case;
+      --Affichage de cp et de la memoire tas
+      Put ("Cp = ");
+      Put_Line (cp'Image);
+      Put_Line (" ");
 
+      -- affichage du tas
+      Put_Line ("Tas : ");
+      for i in 1 .. GetNbElements (tas) loop
+         Put_Line (i'Image & " : " & GetVariable (tas, i)'Image);
+      end loop;
+      Put_Line (" ");
    end loop;
-
-   -- print(cp);
-   -- print(tas);
 
 end main;
