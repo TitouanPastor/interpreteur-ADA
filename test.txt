@@ -1,3 +1,15 @@
+Programme Test est
+    a, b, c : Entier
+Début
+    1 a <- 2
+    2 b <- 2 * 8
+    3 c <- 0
+    4 IF c GOTO 7
+    5 c <- b / a
+    6 GOTO 4
+    7 NULL
+Fin
+
 -- Ce code intermédiaire calcule la factorielle F d’un entier n
 -- avec numéros de ligne
 Programme Facto est

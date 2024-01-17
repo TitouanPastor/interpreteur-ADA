@@ -4,7 +4,7 @@ with parseur; use parseur;
 with interpreteur;        use interpreteur;
 with Ada.Text_IO;         use Ada.Text_IO;
 with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
-with Dico_entiers; use Dico_entiers;
+with Map_entiers; use Map_entiers;
 
 procedure main is
 
@@ -52,7 +52,7 @@ begin
    cp := 1;
 
    -- Genere les mémoires tas et code
-   GenererMemoires (mem, tas);
+   -- GenererMemoires (mem, tas);
    FichierToMemoire("test.txt", tas, mem, dico);
 
    -- Parser le fichier txt du code intermédiaire pour le mettre en mémoire
