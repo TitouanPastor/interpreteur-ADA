@@ -9,3 +9,5 @@ Début
     6 GOTO 4
     7 NULL
 Fin
+
+
