@@ -1,0 +1,55 @@
+R0 : Comment parser un fichier .txt de code intermédiaire
+
+
+R1 : Comment R0
+
+    A1 : Initialiser les variables
+    Ouvrir le fichier
+    Tant que ce n'est pas la fin du fichier faire 
+        Pour chaque ligne, on récupère sous forme d'un tableau de mots les mots
+            --> Appel au sous programme LigneToTabMots
+        A2 : On traite la ligne courante
+    Fin Tant que
+
+
+R2 : Comment A1
+
+    Initialiser le tableau de mots tab
+    Initialiser le compteur cntVar du nombre de variables a 1
+    Initialiser la table de correspondance (dictionnaire) entre les noms des variables et leurs addresses dans le tas
+
+
+R2 : Comment A2
+
+    Si le premier mot est "Programme" alors
+        Tant que le premier mot n'est pas "Début" alors
+            On récupère la ligne suivante
+                --> Appel au sous programme LigneToTabMots
+            On ajoute les variables au tas
+                --> Appel au sous programme TraiterDeclarationsVariables
+        Fin Tant que
+    Sinon
+        Tant que le premier mot n'est pas "Fin" alors
+        On récupère la ligne suivante
+            --> Appel au sous programme LigneToTabMots
+        B1 : On traite la ligne d'instruction courante
+    fin si
+
+
+R3 : Comment B1
+
+    On skip tab(1) (le premier mot est le numéro de la ligne)
+    Si C1 : tab(2) est une variable alors
+        On traite l'opération
+            --> Appel au sous programme ParserOperation
+    fin si
+    Sinon si tab(2) = "IF" alors
+        On traite l'instruction
+            --> Appel au sous programme ParserIf
+    Sinon si tab(2) = "GOTO" alors
+        On traite l'instruction
+            --> Appel au sous programme ParserGoto
+    Sinon si tab(2) = "NULL" alors
+                On traite l'instruction
+            --> Appel au sous programme ParserNull
+    fin si

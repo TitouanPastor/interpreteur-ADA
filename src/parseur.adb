@@ -223,8 +223,8 @@ package body parseur is
       InitialiserTabMot (tabMots);
       InitMapOperations (mapOperations);
 
-      --MAIN loop
-      while not End_Of_File (Fichier) and tabMots.tabMotLigne (1) /= "Fin" loop
+      --Main loop
+      while not End_Of_File (Fichier) and then tabMots.tabMotLigne (1) /= "Fin" loop
 
          LigneToTabMots (Fichier, tabMots);
 

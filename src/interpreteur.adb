@@ -168,7 +168,6 @@ package body interpreteur is
       -- On récupère la première valeur x
       x := GetCaseInstruction (instruction, 3);
 
-      Put_Line (x'Image);
       -- Cas d'un indice de variable du tas
       if GetCaseInstruction (instruction, 2) = 1 then
          Put_Line ("Récupération variable x : ");

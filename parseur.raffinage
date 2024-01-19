@@ -1,6 +1,7 @@
 R0 : Comment parser un fichier .txt de code intermédiaire
 
 R1 : Comment R0
+
     Initialiser le tableau de mots tab
     Initialiser le compteur cntVar du nombre de variables a 1
     Initialiser la table de correspondance (dictionnaire) entre les noms des variables et leurs addresses dans le tas

@@ -53,7 +53,7 @@ begin
 
    -- Genere les mémoires tas et code
    -- GenererMemoires (mem, tas);
-   FichierToMemoire ("fact.txt", tas, mem, dico);
+   FichierToMemoire ("test.txt", tas, mem, dico);
 
    -- Parser le fichier txt du code intermédiaire pour le mettre en mémoire
    while cp <= getNbInstructions (mem) loop
