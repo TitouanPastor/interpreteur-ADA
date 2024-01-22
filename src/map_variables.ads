@@ -2,7 +2,7 @@ with Ada.Containers.Indefinite_Hashed_Maps;
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
 with Ada.Strings.Hash;
 with tas;                   use tas;
-with Ada.Text_IO; use Ada.Text_IO;
+with Ada.Text_IO;           use Ada.Text_IO;
 
 package Map_Variables is
 
@@ -14,8 +14,8 @@ package Map_Variables is
    end record;
 
    package Variable_Hashed_Maps is new Ada.Containers.Indefinite_Hashed_Maps
-     (Key_Type => String, Element_Type => T_ElementMap, Hash => Ada.Strings.Hash,
-      Equivalent_Keys => "=");
+     (Key_Type => String, Element_Type => T_ElementMap,
+      Hash     => Ada.Strings.Hash, Equivalent_Keys => "=");
    use Variable_Hashed_Maps;
 
    procedure AfficherMap (map : in Variable_Hashed_Maps.Map);

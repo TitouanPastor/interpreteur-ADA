@@ -72,8 +72,8 @@ package body Memoire_Code is
     Put (GetCaseInstruction (instruction, 3),3);
     Put (GetCaseInstruction (instruction, 4),3);
     Put (GetCaseInstruction (instruction, 5),3);
-    Put (GetCaseInstruction (instruction, 6),3);
-    Put_Line ("");
+      Put (GetCaseInstruction (instruction, 6),3);
+      New_Line(1);
   end AfficherInstruction;
 
 end Memoire_Code;
