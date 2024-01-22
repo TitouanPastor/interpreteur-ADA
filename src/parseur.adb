@@ -97,52 +97,54 @@ package body parseur is
       memCode       :    out T_Memoire_Code)
    is
       x, y : Integer; -- valeur dans les opérations x <- y op z avec y et z pouvant etre des variables ou des constantes
-      xflag, yflag : Integer; -- codes associés aux opérandes qui permettent de définir si ce sont des variables ou des constantes
+      xflag,
+      yflag : Integer; -- codes associés aux opérandes qui permettent de définir si ce sont des variables ou des constantes
       offsetOperation : Integer; -- Offset qui permet de construire le code de l'opération en fonction du type
    begin
 
       -- On regarde si la première opérande est entourée de quote de type 'X'
 
-      if To_String (tabMots.tabMotLigne (4))(1) = ''' then
+      if To_String (tabMots.tabMotLigne (4)) (1) = ''' then
 
-         xflag := 2;
+         xflag           := 2;
          offsetOperation := 20;
 
-      -- Si non constante caractère, on regarde si la première opérande est une constante d'un autre type ou une variable
+         x := Character'Pos(To_String (tabMots.tabMotLigne (4)) (1));
+
+         -- Si non constante caractère, on regarde si la première opérande est une constante d'un autre type ou une variable
       elsif mapVariable.Contains (To_String (tabMots.tabMotLigne (4))) then
 
-         case mapVariable.Element(To_String (tabMots.tabMotLigne (4))).TypeVar is
+         case mapVariable.Element (To_String (tabMots.tabMotLigne (4))).TypeVar
+         is
 
-         when Integer_Type =>
+            when Integer_Type =>
 
-            xflag := 1;
-            offsetOperation := 0;
+               xflag           := 1;
+               offsetOperation := 0;
 
-         when Character_Type =>
+            when Character_Type =>
 
-            xflag := 3;
-            offsetOperation := 20;
+               xflag           := 3;
+               offsetOperation := 20;
 
-         when Boolean_Type =>
+            when Boolean_Type =>
 
-            xflag := 5;
-            offsetOperation := 60;
+               xflag           := 5;
+               offsetOperation := 60;
 
-         when others =>
+            when others =>
 
-            null;
+               null;
 
-      end case;
+         end case;
 
          x :=
-         mapVariable.Element (To_String (tabMots.tabMotLigne (4))).indiceTas;
+           mapVariable.Element (To_String (tabMots.tabMotLigne (4))).indiceTas;
 
       else
-         x           := Integer'Value (To_String (tabMots.tabMotLigne (4)));
+         x     := Integer'Value (To_String (tabMots.tabMotLigne (4)));
          xflag := 0;
       end if;
-
-
 
       --Si l'instruction est une simple assignation ( x <- 4)
       if tabMots.nbElements = 4 then
@@ -150,38 +152,45 @@ package body parseur is
            (memCode,
             mapVariable.Element (To_String (tabMots.tabMotLigne (2)))
               .indiceTas,
-            xflag, x, mapOperations ("->")+ offsetOperation, 0, 0);
+            xflag, x, mapOperations ("->") + offsetOperation, 0, 0);
       else -- Sinon on regarde la seconde opérande
-
 
          if mapVariable.Contains (To_String (tabMots.tabMotLigne (6))) then
             y :=
               mapVariable.Element (To_String (tabMots.tabMotLigne (6)))
-           .indiceTas;
+                .indiceTas;
 
-         if xflag mod 2 = 0 then
-            yflag := xflag+1;
+            if xflag mod 2 = 0 then
+               yflag := xflag + 1;
+            else
+               yflag := xflag;
+            end if;
+
          else
-            yflag := xflag;
-         end if;
+            y := Integer'Value (To_String (tabMots.tabMotLigne (6)));
 
-         else
-            y           := Integer'Value (To_String (tabMots.tabMotLigne (6)));
+            if xflag mod 2 = 1 then
+               yflag := xflag;
+            else
+               yflag := xflag - 1;
 
-          if xflag mod 2 = 0 then
-            yflag := xflag;
-         else
-            yflag := xflag-1;
+            end if;
 
-         end if;
+            if yflag = 2 then
+
+               y := Character'Pos(To_String (tabMots.tabMotLigne (6)) (1));
+
+            end if;
+
          end if;
          InsererInstruction
            (memCode,
             mapVariable.Element (To_String (tabMots.tabMotLigne (2)))
               .indiceTas,
             xflag, x,
-            mapOperations (To_String (tabMots.tabMotLigne (5)))+offsetOperation, yflag,
-            y);
+            mapOperations (To_String (tabMots.tabMotLigne (5))) +
+            offsetOperation,
+            yflag, y);
       end if;
    end ParserOperation;
 
