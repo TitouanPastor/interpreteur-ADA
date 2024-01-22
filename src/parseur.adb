@@ -100,7 +100,8 @@ package body parseur is
    begin
       -- On regarde si la première opérande est une constante ou une variable
       if mapVariable.Contains (To_String (tabMots.tabMotLigne (4))) then
-         x           := mapVariable.Element(To_String (tabMots.tabMotLigne (4))).indiceTas;
+         x :=
+           mapVariable.Element (To_String (tabMots.tabMotLigne (4))).indiceTas;
          xIsVariable := 1;
       else
          x           := Integer'Value (To_String (tabMots.tabMotLigne (4)));
@@ -110,19 +111,25 @@ package body parseur is
       --Si l'instruction est une simple assignation ( x <- 4)
       if tabMots.nbElements = 4 then
          InsererInstruction
-           (memCode, mapVariable.Element (To_String (tabMots.tabMotLigne (2))).indiceTas,
+           (memCode,
+            mapVariable.Element (To_String (tabMots.tabMotLigne (2)))
+              .indiceTas,
             xIsVariable, x, mapOperations ("->"), 0, 0);
       else -- Sinon on regarde la seconde opérande
 
          if mapVariable.Contains (To_String (tabMots.tabMotLigne (6))) then
-            y           := mapVariable.Element (To_String (tabMots.tabMotLigne (6))).indiceTas;
+            y :=
+              mapVariable.Element (To_String (tabMots.tabMotLigne (6)))
+                .indiceTas;
             yIsVariable := 1;
          else
             y           := Integer'Value (To_String (tabMots.tabMotLigne (6)));
             yIsVariable := 0;
          end if;
          InsererInstruction
-           (memCode, mapVariable.Element (To_String (tabMots.tabMotLigne (2))).indiceTas,
+           (memCode,
+            mapVariable.Element (To_String (tabMots.tabMotLigne (2)))
+              .indiceTas,
             xIsVariable, x,
             mapOperations (To_String (tabMots.tabMotLigne (5))), yIsVariable,
             y);
@@ -143,7 +150,9 @@ package body parseur is
    begin
       if mapVariable.Contains (To_String (tabMots.tabMotLigne (3))) then
          InsererInstruction
-           (memCode, -2, 1, mapVariable.Element (To_String (tabMots.tabMotLigne (3))).indiceTas,
+           (memCode, -2, 1,
+            mapVariable.Element (To_String (tabMots.tabMotLigne (3)))
+              .indiceTas,
             0, 0, Integer'Value (To_String (tabMots.tabMotLigne (5))));
       else
          InsererInstruction
@@ -165,10 +174,25 @@ package body parseur is
       i          : Integer;
       cntVar     : Integer;
       tempNomVar : Unbounded_String;
+      enumType   : Enum_Type;
    begin
       Put_Line ("######### Dans la déclaration des variables");
       InitialisercntVar (cntVar);
       while tabMots.tabMotLigne (1) /= "Début" loop
+         -- Insertion du type dans le dictionnaire de variable
+
+         if tabMots.tabMotLigne (tabMots.nbElements) = "Entier" then
+            enumType := Integer_Type;
+
+         elsif tabMots.tabMotLigne (tabMots.nbElements) = "Caractère" then
+            enumType := Character_Type;
+
+         elsif tabMots.tabMotLigne (tabMots.nbElements) = "Booléen" then
+            enumType := Boolean_Type;
+         else
+            null;
+         end if;
+
          i := 1;
          -- Boucle qui parcoure tout le tableau de mots
          -- On vérifie si on ets arrivé au bout des variables
@@ -181,12 +205,13 @@ package body parseur is
               and then tabMots.tabMotLigne (i + 1) = ":"
             then
                -- La variable n'est pas suivie par une virgule
-               mapVariable.Include (To_String (tempNomVar), (cntVar, Integer_Type));
+               mapVariable.Include
+                 (To_String (tempNomVar), (cntVar, enumType));
             else
                -- La variable est suivie par une virgule
                mapVariable.Include
                  (To_String (tempNomVar) (1 .. Length (tempNomVar) - 1),
-                  (cntVar, Integer_Type));
+                  (cntVar, enumType));
             end if;
             Put ("Ajout de " & tempNomVar);
             Put (" à l'indice " & cntVar'Image);
@@ -223,7 +248,8 @@ package body parseur is
       InitMapOperations (mapOperations);
 
       --Main loop
-      while not End_Of_File (Fichier) and then tabMots.tabMotLigne (1) /= "Fin" loop
+      while not End_Of_File (Fichier) and then tabMots.tabMotLigne (1) /= "Fin"
+      loop
 
          LigneToTabMots (Fichier, tabMots);
 
@@ -281,8 +307,6 @@ package body parseur is
          end if;
       end loop;
 
-
-
       -- Affichage de la map dico_entiers
       Put_Line ("####################################");
       Put_Line (" ");
@@ -308,7 +332,7 @@ package body parseur is
       -- Affichage de la mémoire de code
       for i in 1 .. getNbInstructions (memCode) loop
          Put (i'Image & " : ");
-         AfficherInstruction(GetInstruction (memCode, i));
+         AfficherInstruction (GetInstruction (memCode, i));
       end loop;
 
       Put_Line ("####################################");
