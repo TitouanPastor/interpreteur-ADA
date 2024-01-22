@@ -7,6 +7,7 @@ with Ada.Text_IO; use Ada.Text_IO;
 with Memoire_Code; use Memoire_Code;
 with tas;          use tas;
 with Map_entiers; use Map_entiers;
+with Map_Variables; use Map_Variables;
 
 package parseur is
 
@@ -33,7 +34,7 @@ package parseur is
    -- Pre  => chemin /= null,
    -- Post => memVar /= null, memCode /= null;
    procedure FichierToMemoire
-     (chemin : in String; tas : out T_Tas; memCode : out T_Memoire_Code; mapVariable : out Integer_Hashed_Maps.Map);
+     (chemin : in String; tas : out T_Tas; memCode : out T_Memoire_Code; mapVariable : out Variable_Hashed_Maps.Map);
 
 
    private

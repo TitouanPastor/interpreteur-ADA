@@ -1,5 +1,5 @@
 with Ada.Assertions; use Ada.Assertions;
-with Map_entiers;    use Map_entiers;
+with Map_Variables; use Map_Variables;
 with tas;            use tas;
 with parseur;        use parseur;
 with Memoire_Code;   use Memoire_Code;
@@ -16,7 +16,7 @@ procedure tests_parseur is
    procedure test_FichierToMemoire is
       mem         : T_Memoire_Code;
       tas         : T_Tas;
-      mapVariable : Integer_Hashed_Maps.Map;
+      mapVariable : Variable_Hashed_Maps.Map;
    begin
       InitialiserMemoireCode (mem);
       InitialiserTas (tas);

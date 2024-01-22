@@ -91,7 +91,7 @@ package body parseur is
    end InitMapOperations;
 
    procedure ParserOperation
-     (mapVariable   : in     Integer_Hashed_Maps.Map;
+     (mapVariable   : in     Variable_Hashed_Maps.Map;
       mapOperations : in     Integer_Hashed_Maps.Map; tabMots : in T_Mot;
       memCode       :    out T_Memoire_Code)
    is
@@ -100,7 +100,7 @@ package body parseur is
    begin
       -- On regarde si la première opérande est une constante ou une variable
       if mapVariable.Contains (To_String (tabMots.tabMotLigne (4))) then
-         x           := mapVariable (To_String (tabMots.tabMotLigne (4)));
+         x           := mapVariable.Element(To_String (tabMots.tabMotLigne (4))).indiceTas;
          xIsVariable := 1;
       else
          x           := Integer'Value (To_String (tabMots.tabMotLigne (4)));
@@ -110,19 +110,19 @@ package body parseur is
       --Si l'instruction est une simple assignation ( x <- 4)
       if tabMots.nbElements = 4 then
          InsererInstruction
-           (memCode, mapVariable (To_String (tabMots.tabMotLigne (2))),
+           (memCode, mapVariable.Element (To_String (tabMots.tabMotLigne (2))).indiceTas,
             xIsVariable, x, mapOperations ("->"), 0, 0);
       else -- Sinon on regarde la seconde opérande
 
          if mapVariable.Contains (To_String (tabMots.tabMotLigne (6))) then
-            y           := mapVariable (To_String (tabMots.tabMotLigne (6)));
+            y           := mapVariable.Element (To_String (tabMots.tabMotLigne (6))).indiceTas;
             yIsVariable := 1;
          else
             y           := Integer'Value (To_String (tabMots.tabMotLigne (6)));
             yIsVariable := 0;
          end if;
          InsererInstruction
-           (memCode, mapVariable (To_String (tabMots.tabMotLigne (2))),
+           (memCode, mapVariable.Element (To_String (tabMots.tabMotLigne (2))).indiceTas,
             xIsVariable, x,
             mapOperations (To_String (tabMots.tabMotLigne (5))), yIsVariable,
             y);
@@ -137,13 +137,13 @@ package body parseur is
    end ParserGoto;
 
    procedure ParserIf
-     (mapVariable : in Integer_Hashed_Maps.Map; memCode : out T_Memoire_Code;
+     (mapVariable : in Variable_Hashed_Maps.Map; memCode : out T_Memoire_Code;
       tabMots     : in T_Mot)
    is
    begin
       if mapVariable.Contains (To_String (tabMots.tabMotLigne (3))) then
          InsererInstruction
-           (memCode, -2, 1, mapVariable (To_String (tabMots.tabMotLigne (3))),
+           (memCode, -2, 1, mapVariable.Element (To_String (tabMots.tabMotLigne (3))).indiceTas,
             0, 0, Integer'Value (To_String (tabMots.tabMotLigne (5))));
       else
          InsererInstruction
@@ -160,7 +160,7 @@ package body parseur is
 
    procedure TraiterDeclarationsVariables
      (Fichier     : in out File_Type; tabMots : in out T_Mot; tas : out T_Tas;
-      mapVariable : in out Integer_Hashed_Maps.Map)
+      mapVariable : in out Variable_Hashed_Maps.Map)
    is
       i          : Integer;
       cntVar     : Integer;
@@ -181,12 +181,12 @@ package body parseur is
               and then tabMots.tabMotLigne (i + 1) = ":"
             then
                -- La variable n'est pas suivie par une virgule
-               mapVariable.Include (To_String (tempNomVar), cntVar);
+               mapVariable.Include (To_String (tempNomVar), (cntVar, Integer_Type));
             else
                -- La variable est suivie par une virgule
                mapVariable.Include
                  (To_String (tempNomVar) (1 .. Length (tempNomVar) - 1),
-                  cntVar);
+                  (cntVar, Integer_Type));
             end if;
             Put ("Ajout de " & tempNomVar);
             Put (" à l'indice " & cntVar'Image);
@@ -206,7 +206,7 @@ package body parseur is
 
    procedure FichierToMemoire
      (chemin      : in String; tas : out T_Tas; memCode : out T_Memoire_Code;
-      mapVariable :    out Integer_Hashed_Maps.Map)
+      mapVariable :    out Variable_Hashed_Maps.Map)
    is
       Fichier       : File_Type;
       Ligne         : Unbounded_String;

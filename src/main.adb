@@ -4,7 +4,7 @@ with parseur;             use parseur;
 with interpreteur;        use interpreteur;
 with Ada.Text_IO;         use Ada.Text_IO;
 with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
-with Map_entiers;         use Map_entiers;
+with Map_Variables; use Map_Variables;
 
 procedure main is
 
@@ -43,7 +43,7 @@ procedure main is
    mem  : T_Memoire_Code;
    tas  : T_Tas;
    cp   : Integer;
-   mapVariable : Integer_Hashed_Maps.Map;
+   mapVariable : Variable_Hashed_Maps.Map;
 
 begin
 
