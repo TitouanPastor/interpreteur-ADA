@@ -1,6 +1,9 @@
 with Ada.Text_IO;         use Ada.Text_IO;
 with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
 
+with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
+with Ada.Strings.Unbounded.Text_IO; use Ada.Strings.Unbounded.Text_IO;
+
 package Menu is
 
    -- Nom fonction : ChoixMode
@@ -8,11 +11,11 @@ package Menu is
    -- Sémantique : Permet à l'utilisateur de saisir le chemin du fichier
 
    -- Paramètres :
-   --   chemin    : out string    --> chemin vers le fichier de code intermedaire à executer
+   --   chemin    : out Unbounded_String    --> chemin vers le fichier de code intermedaire à executer
 
    -- Pre : /
    -- Post : /
-   procedure ChoixFichier (chemin : out String);
+   procedure ChoixFichier (chemin : out Unbounded_String);
 
    -- Nom fonction : ChoixMode
 

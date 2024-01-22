@@ -4,12 +4,11 @@ package body Menu is
    -- ChoixFichier --
    ---------------------
 
-   procedure ChoixFichier (chemin : out String) is
-
+   procedure ChoixFichier (chemin : out Unbounded_String) is
    begin
 
       Put_Line ("Merci d'entrer le chemin du fichier sans guillemets");
-      Get (chemin);
+      chemin := get_line;
 
    end ChoixFichier;
 

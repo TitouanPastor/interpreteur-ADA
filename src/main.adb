@@ -5,6 +5,10 @@ with interpreteur;        use interpreteur;
 with Ada.Text_IO;         use Ada.Text_IO;
 with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
 with Map_Variables; use Map_Variables;
+with Menu; use Menu;
+
+with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
+with Ada.Strings.Unbounded.Text_IO; use Ada.Strings.Unbounded.Text_IO;
 
 procedure main is
 
@@ -44,6 +48,7 @@ procedure main is
    tas  : T_Tas;
    cp   : Integer;
    mapVariable : Variable_Hashed_Maps.Map;
+   cheminFichier : Unbounded_String;
 
 begin
 
@@ -53,7 +58,10 @@ begin
 
    -- Genere les mémoires tas et code
    -- GenererMemoires (mem, tas);
-   FichierToMemoire ("testBool.txt", tas, mem, mapVariable);
+
+   ChoixFichier(cheminFichier);
+
+   FichierToMemoire (To_String(cheminFichier), tas, mem, mapVariable);
 
    -- Parser le fichier txt du code intermédiaire pour le mettre en mémoire
    while cp <= getNbInstructions (mem) loop
