@@ -12,4 +12,11 @@ package body Map_entiers is
       end loop;
    end AfficherMap;
 
+   procedure AfficherTas(map : in Integer_Hashed_Maps.Map; tas : in T_Tas) is
+   begin
+      for C in map.Iterate loop
+         Put_Line (Key (C) & " : " & GetVariable(tas, map(C))'Image);
+      end loop;
+   end AfficherTas;
+
 end Map_entiers;

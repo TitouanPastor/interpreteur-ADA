@@ -43,7 +43,7 @@ procedure main is
    mem  : T_Memoire_Code;
    tas  : T_Tas;
    cp   : Integer;
-   dico : Integer_Hashed_Maps.Map;
+   mapVariable : Integer_Hashed_Maps.Map;
 
 begin
 
@@ -53,7 +53,7 @@ begin
 
    -- Genere les mémoires tas et code
    -- GenererMemoires (mem, tas);
-   FichierToMemoire ("test.txt", tas, mem, dico);
+   FichierToMemoire ("fact.txt", tas, mem, mapVariable);
 
    -- Parser le fichier txt du code intermédiaire pour le mettre en mémoire
    while cp <= getNbInstructions (mem) loop
@@ -82,15 +82,13 @@ begin
 
       end case;
       --Affichage de cp et de la memoire tas
-      Put ("Cp = ");
+      Put ("-> Cp = ");
       Put_Line (cp'Image);
       Put_Line (" ");
 
       -- affichage du tas
-      Put_Line ("Tas : ");
-      for i in 1 .. GetNbElements (tas) loop
-         Put_Line (i'Image & " : " & GetVariable (tas, i)'Image);
-      end loop;
+      Put_Line ("-> Tas : ");
+      AfficherTas(mapVariable, tas);
       Put_Line (" ");
    end loop;
 
