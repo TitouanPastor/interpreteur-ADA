@@ -86,7 +86,6 @@ package body parseur is
       map.Include ("<=", 10);
       map.Include (">=", 11);
       map.Include ("/=", 12);
-      map.Include ("BETWEEN", 13);
       map.Include ("OR", 14);
       map.Include ("AND", 15);
    end InitMapOperations;
