@@ -101,10 +101,18 @@ package body parseur is
       yflag : Integer; -- codes associés aux opérandes qui permettent de définir si ce sont des variables ou des constantes
       offsetOperation : Integer; -- Offset qui permet de construire le code de l'opération en fonction du type
    begin
+      offsetOperation := 0;
+
+      --On regarde si la valeur est une constante boolénne
+      if To_String (tabMots.tabMotLigne (4)) = "false" then
+         xflag := 4;
+         x     := 0;
+      elsif To_String (tabMots.tabMotLigne (4)) = "true" then
+         xflag := 4;
+         x     := 1;
 
       -- On regarde si la première opérande est entourée de quote de type 'X'
-
-      if To_String (tabMots.tabMotLigne (4)) (1) = ''' then
+      elsif To_String (tabMots.tabMotLigne (4)) (1) = ''' then
 
          xflag           := 2;
          offsetOperation := 20;
@@ -129,8 +137,7 @@ package body parseur is
 
             when Boolean_Type =>
 
-               xflag           := 5;
-               offsetOperation := 60;
+               xflag := 5;
 
             when others =>
 
@@ -169,7 +176,7 @@ package body parseur is
          else
             y := Integer'Value (To_String (tabMots.tabMotLigne (6)));
 
-            if xflag mod 2 = 1 then
+            if xflag mod 2 = 0 then
                yflag := xflag;
             else
                yflag := xflag - 1;
@@ -179,6 +186,13 @@ package body parseur is
             if yflag = 2 then
 
                y := Character'Pos (To_String (tabMots.tabMotLigne (6)) (2));
+
+            elsif yflag = 4 then
+               if To_String (tabMots.tabMotLigne (6)) = "false" then
+                  y     := 0;
+               elsif To_String (tabMots.tabMotLigne (6)) = "true" then
+                  y     := 1;
+               end if;
 
             end if;
 
@@ -208,13 +222,13 @@ package body parseur is
    begin
       if mapVariable.Contains (To_String (tabMots.tabMotLigne (3))) then
          InsererInstruction
-           (memCode, -2, 1,
+           (memCode, -2, 5,
             mapVariable.Element (To_String (tabMots.tabMotLigne (3)))
               .indiceTas,
             0, 0, Integer'Value (To_String (tabMots.tabMotLigne (5))));
       else
          InsererInstruction
-           (memCode, -2, 0,
+           (memCode, -2, 4,
             Integer'Value (To_String (tabMots.tabMotLigne (3))), 0, 0,
             Integer'Value (To_String (tabMots.tabMotLigne (5))));
       end if;

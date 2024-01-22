@@ -1,0 +1,14 @@
+Programme Test est
+    a, b : Entier
+    c : Booléen
+Début
+    1 a <- 2
+    2 b <- 2 * 8
+    3 c <- false
+    4 IF c GOTO 7
+    5 c <- b = 16
+    6 GOTO 4
+    7 NULL
+Fin
+
+

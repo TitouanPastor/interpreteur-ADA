@@ -39,7 +39,7 @@ package body interpreteur is
       -- On récupère la première valeur x
       x := GetCaseInstruction (instruction, 3);
       -- Cas d'un indice de variable du tas
-      if GetCaseInstruction (instruction, 2) = 1 then
+      if GetCaseInstruction (instruction, 2) = 5 then
          Put_Line ("Index " & x'Image);
          x := GetVariable (tas, x);
          Put_Line ("Value " & x'Image);
@@ -178,7 +178,7 @@ package body interpreteur is
       x := GetCaseInstruction (instruction, 3);
 
       -- Cas d'un indice de variable du tas
-      if GetCaseInstruction (instruction, 2) = 1 then
+      if GetCaseInstruction (instruction, 2) = 1 or GetCaseInstruction (instruction, 2) = 3  or GetCaseInstruction (instruction, 2) = 5 then
          Put_Line ("Récupération variable x : ");
          Put ("Index dans tab : ");
          Put_Line (x'Image);

@@ -5,7 +5,7 @@ Début
     1 a <- 2
     2 b <- 2 * 8
     3 d <- 'a'
-    4 e <- 'b'
+    4 e <- d
     5 c <- 0
     6 IF c GOTO 9
     7 c <- b / a
