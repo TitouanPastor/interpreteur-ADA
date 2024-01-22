@@ -21,7 +21,7 @@ procedure tests_parseur is
       InitialiserMemoireCode (mem);
       InitialiserTas (tas);
 
-      FichierToMemoire ("test.txt", tas, mem, mapVariable);
+      FichierToMemoire ("testChar.txt", tas, mem, mapVariable);
       Assert(GetCaseInstruction(GetInstruction(mem, 1),1) = 1, "Erreur test_FichierToMemoire");
       Assert(GetCaseInstruction(GetInstruction(mem, 1),2) = 0, "Erreur test_FichierToMemoire");
       Assert(GetCaseInstruction(GetInstruction(mem, 1),3) = 2, "Erreur test_FichierToMemoire");

@@ -109,7 +109,7 @@ package body parseur is
          xflag           := 2;
          offsetOperation := 20;
 
-         x := Character'Pos(To_String (tabMots.tabMotLigne (4)) (1));
+         x := Character'Pos (To_String (tabMots.tabMotLigne (4)) (2));
 
          -- Si non constante caractère, on regarde si la première opérande est une constante d'un autre type ou une variable
       elsif mapVariable.Contains (To_String (tabMots.tabMotLigne (4))) then
@@ -178,7 +178,7 @@ package body parseur is
 
             if yflag = 2 then
 
-               y := Character'Pos(To_String (tabMots.tabMotLigne (6)) (1));
+               y := Character'Pos (To_String (tabMots.tabMotLigne (6)) (2));
 
             end if;
 
@@ -273,6 +273,7 @@ package body parseur is
             end if;
             Put ("Ajout de " & tempNomVar);
             Put (" à l'indice " & cntVar'Image);
+            Put (" : " & enumType'Image);
             Put_Line (" ");
             cntVar := cntVar + 1;
             i      := i + 1;

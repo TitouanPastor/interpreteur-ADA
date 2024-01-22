@@ -1,0 +1,16 @@
+Programme Test est
+    a, b, c : Entier
+    d, e : Caractère
+Début
+    1 a <- 2
+    2 b <- 2 * 8
+    3 d <- 'a'
+    4 e <- 'b'
+    5 c <- 0
+    6 IF c GOTO 9
+    7 c <- b / a
+    8 GOTO 6
+    9 NULL
+Fin
+
+

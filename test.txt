@@ -1,9 +1,7 @@
 Programme Test est
     a, b, c : Entier
-    d, e, f : Caractère
 Début
     1 a <- 2
-      d <- e + f --- 3 d'indice 3 indice 25 3 f'indice
     2 b <- 2 * 8
     3 c <- 0
     4 IF c GOTO 7

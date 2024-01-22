@@ -85,6 +85,7 @@ package body interpreteur is
       -- Selon l'opération
       case GetCaseInstruction (instruction, 4) is
          -- arithmétique
+         --Entiers
          when 1 =>
             ModifierVariable (tas, GetCaseInstruction (instruction, 1), x + y);
          when 2 =>
@@ -96,7 +97,10 @@ package body interpreteur is
          when 6 =>
             ModifierVariable
               (tas, GetCaseInstruction (instruction, 1), x mod y);
-
+            -- Caractères
+         when 21 => --TODO
+                    --ModifierVariable(tas, GetCaseInstruction (instruction, 1), x + y);
+                 null;
             -- Logique
          when 7 =>
             if x = y then
@@ -148,6 +152,11 @@ package body interpreteur is
                ModifierVariable (tas, GetCaseInstruction (instruction, 1), 0);
             end if;
             --TODO : more logic cases
+            -- Caractères
+         when 27 =>
+            ModifierVariable (tas, GetCaseInstruction (instruction, 1), Boolean'Pos(x = y));
+         when 32 =>
+            ModifierVariable (tas, GetCaseInstruction (instruction, 1), Boolean'Pos(x /= y));
          when others =>
             null;
       end case;
@@ -180,7 +189,7 @@ package body interpreteur is
 
       case GetCaseInstruction (instruction, 4) is
          -- Cas d'une simple affectation n <- 5 par exemple
-         when 5 =>
+         when 5 | 25 =>
             TraiterAssignation (instruction, tas, x);
 
             -- Cas d'une affectation avec opération binaire
