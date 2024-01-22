@@ -1,18 +1,18 @@
-with Ada.Text_IO; use Ada.Text_IO;
+with Ada.Text_IO;         use Ada.Text_IO;
 with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
-  
+
 package Menu is
-    
+
    -- Nom fonction : ChoixMode
 
-   -- Sémantique : Permet à l'utilisateur de saisir le chemin du fichier 
+   -- Sémantique : Permet à l'utilisateur de saisir le chemin du fichier
 
    -- Paramètres :
    --   chemin    : out string    --> chemin vers le fichier de code intermedaire à executer
-   
+
    -- Pre : /
    -- Post : /
-   procedure ChoixFichier (chemin : out string);
+   procedure ChoixFichier (chemin : out String);
 
    -- Nom fonction : ChoixMode
 
@@ -26,17 +26,16 @@ package Menu is
 
    -- Pre : /
    -- Post : /
-   
+
    function ChoixMode return Integer;
-    
-   
-   -- Nom fonction : ChoixSortir 
+
+   -- Nom fonction : ChoixSortir
 
    -- Sémantique : Permet à l'utilisateur de saisir recommencer l'execution d'un nouveau programme ou de sortir
 
    -- Paramètres :
    --   /
-   
+
    -- retour :
    --  Integer --> 1 correspondant à sortir du programme ou 2 correspondant à recommencer le programme
 
