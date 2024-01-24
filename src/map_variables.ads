@@ -22,6 +22,8 @@ package Map_Variables is
 
    procedure AfficherTas (map : in Variable_Hashed_Maps.Map; tas : in T_Tas);
 
+   function GetKeyFromValue (Map : Variable_Hashed_Maps.Map; Value : Integer) return Unbounded_String;
+
 private
 
 end Map_Variables;

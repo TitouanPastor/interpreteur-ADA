@@ -102,6 +102,12 @@ begin
             when (-3) =>
                -- B3 : Traiter le cas NULL
                TraiterNULL (cp);
+            when (-4) =>
+               -- B3 : Traiter le cas Lire(x)
+               TraiterLire (GetInstruction (mem, cp), mapVariable, tas, cp);
+            when (-5) =>
+               -- B3 : Traiter le cas Ecrire(x)
+               TraiterEcrire (GetInstruction (mem, cp), mapVariable, tas, cp);
 
             when others =>
                -- B4 : Traiter l'affectation
@@ -128,7 +134,7 @@ begin
       Put_Line (" ");
       Put_Line (" ");
 
--- On demande à l'utilisateur si il veut quitter ou lancer un nouveau programme
+      -- On demande à l'utilisateur si il veut quitter ou lancer un nouveau programme
       choixSortirResult := ChoixSortir;
       Skip_Line (1);
       Put_Line (" ");

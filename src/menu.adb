@@ -32,7 +32,7 @@ package body Menu is
       Put_Line ("┃              /!\ Débogueur activé /!\              ┃");
       Put_Line (" ");
       Put_Line
-        ("⦿ Voici les instructions sous forme de tableaux d'entiers : ");
+        ("--> Voici les instructions sous forme de tableaux d'entiers : ");
       Put_Line (" ");
 
    end AfficherDebogueur;

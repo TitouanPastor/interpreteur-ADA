@@ -99,8 +99,8 @@ package body interpreteur is
               (tas, GetCaseInstruction (instruction, 1), x mod y);
             -- Caractères
          when 21 => --TODO
-                    --ModifierVariable(tas, GetCaseInstruction (instruction, 1), x + y);
-                 null;
+            --ModifierVariable(tas, GetCaseInstruction (instruction, 1), x + y);
+            null;
             -- Logique
          when 7 =>
             if x = y then
@@ -154,9 +154,11 @@ package body interpreteur is
             --TODO : more logic cases
             -- Caractères
          when 27 =>
-            ModifierVariable (tas, GetCaseInstruction (instruction, 1), Boolean'Pos(x = y));
+            ModifierVariable
+              (tas, GetCaseInstruction (instruction, 1), Boolean'Pos (x = y));
          when 32 =>
-            ModifierVariable (tas, GetCaseInstruction (instruction, 1), Boolean'Pos(x /= y));
+            ModifierVariable
+              (tas, GetCaseInstruction (instruction, 1), Boolean'Pos (x /= y));
          when others =>
             null;
       end case;
@@ -178,7 +180,10 @@ package body interpreteur is
       x := GetCaseInstruction (instruction, 3);
 
       -- Cas d'un indice de variable du tas
-      if GetCaseInstruction (instruction, 2) = 1 or GetCaseInstruction (instruction, 2) = 3  or GetCaseInstruction (instruction, 2) = 5 then
+      if GetCaseInstruction (instruction, 2) = 1 or
+        GetCaseInstruction (instruction, 2) = 3 or
+        GetCaseInstruction (instruction, 2) = 5
+      then
          Put_Line ("Récupération variable x : ");
          Put ("Index dans tab : ");
          Put_Line (x'Image);
@@ -198,6 +203,81 @@ package body interpreteur is
       end case;
       CP := CP + 1;
    end TraiterAffectation;
+
+   -----------------
+   -- TraiterLire --
+   -----------------
+
+   procedure TraiterLire
+     (instruction : in     T_Instruction;
+      mapVariable : in     Variable_Hashed_Maps.Map; tas : in out T_Tas;
+      CP          : in out Integer)
+   is
+      nomVar    : Unbounded_String;
+      indiceVar : Integer;
+      getInt    : Integer;
+      getChar   : Character;
+      getBool   : Integer;
+   begin
+      -- On récupère la valeur à écrire
+      indiceVar := GetCaseInstruction (instruction, 3);
+      -- On récupère le nom de la variable
+      nomVar    := GetKeyFromValue (mapVariable, indiceVar);
+      -- On l'affiche suivant le type de la variable
+      case GetCaseInstruction (instruction, 2) is
+         when 1 =>
+            Put ("Entrez un entier pour " & nomVar & " : ");
+            Get (getInt);
+            ModifierVariable (tas, indiceVar, getInt);
+         when 3 =>
+            Put ("Entrez un caractère pour " & nomVar & " : ");
+            Get (getChar);
+            ModifierVariable (tas, indiceVar, Character'Pos (getChar));
+            Skip_Line(1);
+         when 5 =>
+            Put ("Entrez un booléen pour " & nomVar & " : (0/1) ");
+            Get (getBool);
+            ModifierVariable (tas, indiceVar, getBool);
+         when others =>
+            Put_Line ("Type inconnu");
+      end case;
+      CP := CP + 1;
+   end TraiterLire;
+
+   -------------------
+   -- TraiterEcrire --
+   -------------------
+
+   procedure TraiterEcrire
+     (instruction : in     T_Instruction;
+      mapVariable : in     Variable_Hashed_Maps.Map; tas : in out T_Tas;
+      CP          : in out Integer)
+   is
+      valeurVar : Integer;
+      indiceVar : Integer;
+   begin
+      -- On récupère la valeur à écrire
+      indiceVar := GetCaseInstruction (instruction, 3);
+      valeurVar := GetVariable (tas, GetCaseInstruction (instruction, 3));
+      -- On l'affiche suivant le type de la variable
+      case GetCaseInstruction (instruction, 2) is
+         when 1 =>
+            Put_Line
+              (GetKeyFromValue (mapVariable, indiceVar) & " = " &
+               valeurVar'Image);
+         when 3 =>
+            Put_Line
+              (GetKeyFromValue (mapVariable, indiceVar) & " = " &
+               Character'Val (valeurVar));
+         when 5 =>
+            Put_Line
+              (GetKeyFromValue (mapVariable, indiceVar) & " = " &
+               valeurVar'Image);
+         when others =>
+            Put_Line ("Type inconnu");
+      end case;
+      CP := CP + 1;
+   end TraiterEcrire;
 
    -----------------
    -- TraiterNULL --

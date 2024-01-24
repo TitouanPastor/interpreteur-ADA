@@ -1,0 +1,21 @@
+Programme Test est
+    a, b, c : Entier
+    d, e : Caractère
+Début
+    1 a <- 2
+    2 b <- 2 * 8
+    3 d <- 'a'
+    4 e <- d
+    5 lire(a)
+    6 ecrire(a)
+    7 lire(a)
+    6 ecrire(e)
+    7 lire(e)
+    8 c <- 0
+    9 IF c GOTO 12
+    10 c <- b / a
+    11 GOTO 9
+    12 NULL
+Fin
+
+

@@ -37,4 +37,15 @@ package body Map_Variables is
       end loop;
    end AfficherTas;
 
+   -- Fonction pour retrouver la clé à partir de la valeur
+   function GetKeyFromValue (map : Variable_Hashed_Maps.Map; value : Integer) return Unbounded_String is
+   begin
+      for Pair in map.Iterate loop
+         if map(Pair).indiceTas = value then
+            return To_Unbounded_String (Key(Pair));
+         end if;
+      end loop;
+      return To_Unbounded_String("");
+   end GetKeyFromValue;
+
 end Map_Variables;

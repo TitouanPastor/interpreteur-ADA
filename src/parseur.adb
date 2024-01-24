@@ -189,9 +189,9 @@ package body parseur is
 
             elsif yflag = 4 then
                if To_String (tabMots.tabMotLigne (6)) = "false" then
-                  y     := 0;
+                  y := 0;
                elsif To_String (tabMots.tabMotLigne (6)) = "true" then
-                  y     := 1;
+                  y := 1;
                end if;
 
             end if;
@@ -238,6 +238,44 @@ package body parseur is
    begin
       InsererInstruction (memCode, -3, 0, 0, 0, 0, 0);
    end ParserNull;
+
+   procedure ParserLireEcrire
+     (mapVariable : in Variable_Hashed_Maps.Map; memCode : out T_Memoire_Code;
+      tabMots     : in T_Mot)
+   is
+      xString : Unbounded_String;
+      flagVar : Integer; -- le flag de type de la variable x dans lire(x)
+      codeInstruction : Integer; -- le code de l'instruction, soit -4 si c'est lire, soit -5 si c'est écrire
+      offsetParenthese : Integer; -- l'offset de la parenthèse ouvrante dans la chaine lire(x) ou écrire(x) (premier caractère de x)
+   begin
+   -- On récupère si c'est lire ou écrire
+      if To_String (tabMots.tabMotLigne (2)) (1 .. 4) = "lire" then
+         codeInstruction := -4;
+         offsetParenthese := 6;
+      else
+         codeInstruction := -5;
+         offsetParenthese := 8;
+      end if;
+      -- On récupère le x dans la chaine lire(x)
+      xString :=
+        To_Unbounded_String
+          (To_String (tabMots.tabMotLigne (2))
+           (offsetParenthese .. Length (tabMots.tabMotLigne (2)) - 1));
+      -- On affecte le bon flag suivant le type de la variable
+      case mapVariable.Element (To_String (xString)).TypeVar is
+         when Integer_Type =>
+            flagVar := 1;
+         when Character_Type =>
+            flagVar := 3;
+         when Boolean_Type =>
+            flagVar := 5;
+         when others =>
+            null;
+      end case;
+      InsererInstruction
+        (memCode, codeInstruction, flagVar, mapVariable.Element (To_String (xString)).indiceTas,
+         0, 0, 0);
+   end ParserLireEcrire;
 
    procedure TraiterDeclarationsVariables
      (Fichier     : in out File_Type; tabMots : in out T_Mot; tas : out T_Tas;
@@ -370,6 +408,9 @@ package body parseur is
                   Put_Line ("-> NULL");
                   ParserNull (memCode);
 
+                  -- LIRE(X) & ECRIRE(X)
+               elsif To_String (tabMots.tabMotLigne (2)) (1 .. 4) = "lire" or To_String (tabMots.tabMotLigne (2)) (1 .. 6) = "ecrire" then
+                  ParserLireEcrire (mapVariable, memCode, tabMots);
                else
                   Put_Line ("-> Non reconnu");
                end if;

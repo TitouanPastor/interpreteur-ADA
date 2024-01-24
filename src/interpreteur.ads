@@ -1,5 +1,11 @@
 with Memoire_Code; use Memoire_Code;
 with tas;          use tas;
+with Map_Variables; use Map_Variables;
+
+with Ada.Strings.Unbounded;         use Ada.Strings.Unbounded;
+with Ada.Strings.Unbounded.Text_IO; use Ada.Strings.Unbounded.Text_IO;
+
+with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
 
 package interpreteur is
 
@@ -20,7 +26,8 @@ package interpreteur is
    --    - instruction : T_Instruction in --> instruction courante de l'instruction à traiter (ici récuperer la condition ainsi que le numéro de la ligne)
    --    - tas : T_tas in out         --> le tas (mémoire) des variables du programme
    --    - CP : Integer in out       --> compteur de ligne, pointant sur l'instruction courante
-   procedure TraiterIF (instruction : in T_Instruction; tas : in T_Tas; CP : in out Integer);
+   procedure TraiterIF
+     (instruction : in T_Instruction; tas : in T_Tas; CP : in out Integer);
 
    -- Nom Fonction : TraiterAffectation
 
@@ -33,6 +40,32 @@ package interpreteur is
    -- Post => taille de tas en sortie >= taille de tas en entrée;
    procedure TraiterAffectation
      (instruction : in T_Instruction; tas : in out T_Tas; CP : in out Integer);
+
+   -- Nom Fonction : TraiterLire
+
+   -- Sémantique : Traite l'action d'afficher la valeur d'une variable dans la console
+
+   -- Paramètres :
+   --    - instruction : T_Instruction in --> instruction courante de l'instruction à traiter (ici récuperer les composantes de l'opération)
+   --    - tas : T_tas in out         --> le tas (mémoire) des variables du programme
+   --    - mapVariable : Variable_Hashed_Maps.Map in --> la map des variables du programme
+   --    - CP : Integer in out       --> compteur de ligne, pointant sur l'instruction courante
+   -- Post => taille de tas en sortie >= taille de tas en entrée;
+   procedure TraiterLire
+     (instruction : in T_Instruction; mapVariable : in Variable_Hashed_Maps.Map; tas : in out T_Tas; CP : in out Integer);
+
+   -- Nom Fonction : TraiterEcrire
+
+   -- Sémantique : Traite l'action de lire une valeur et de l'assigner a une variable
+
+   -- Paramètres :
+   --    - instruction : T_Instruction in --> instruction courante de l'instruction à traiter (ici récuperer les composantes de l'opération)
+   --    - tas : T_tas in out         --> le tas (mémoire) des variables du programme
+   --    - mapVariable : Variable_Hashed_Maps.Map in --> la map des variables du programme
+   --    - CP : Integer in out       --> compteur de ligne, pointant sur l'instruction courante
+   -- Post => taille de tas en sortie >= taille de tas en entrée;
+   procedure TraiterEcrire
+     (instruction : in T_Instruction; mapVariable : in Variable_Hashed_Maps.Map; tas : in out T_Tas; CP : in out Integer);
 
    -- Nom Fonction : TraiterNull
 
