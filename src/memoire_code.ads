@@ -98,6 +98,8 @@ package Memoire_Code is
    -- Post => getNbInstructions'Result = memoireCode.NbInstructions;
    function getNbInstructions(memoireCode : in T_Memoire_Code) return Integer;
    
+   procedure AfficherMemoireCode (memoireCode : in T_Memoire_Code);
+   
    procedure AfficherInstruction(instruction : in T_Instruction);
 
 private

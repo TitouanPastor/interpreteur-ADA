@@ -9,8 +9,8 @@ package body Map_Variables is
       element : T_ElementMap;
    begin
       for C in map.Iterate loop
-         Element := Map(C);
-         Put_Line (Key (C) & " : " & Integer'Image (Element.indiceTas));
+         element := map (C);
+         Put_Line (Key (C) & " : " & Integer'Image (element.indiceTas));
       end loop;
    end AfficherMap;
 
@@ -19,11 +19,21 @@ package body Map_Variables is
    -----------------
 
    procedure AfficherTas (map : in Variable_Hashed_Maps.Map; tas : in T_Tas) is
-            element : T_ElementMap;
+      element : T_ElementMap;
    begin
       for C in map.Iterate loop
-         Element := Map(C);
-         Put_Line (Key (C) & " : " & GetVariable(tas, Element.indiceTas)'Image);
+         element := map (C);
+      -- Si c'est un type caractère alors on transforme l'entier en caractère
+         if element.TypeVar = Character_Type then
+            Put_Line
+              (Key (C) & " -> tas[" & element.indiceTas'Image & "]  = " &
+               Character'Val( GetVariable(tas, element.indiceTas)));
+         else
+            Put_Line
+              (Key (C) & " -> tas[" & element.indiceTas'Image & "]  =" &
+               GetVariable (tas, element.indiceTas)'Image);
+         end if;
+
       end loop;
    end AfficherTas;
 

@@ -1,19 +1,83 @@
 package body Menu is
 
+   -----------------------
+   -- AfficherBienvenue --
+   -----------------------
+
+   procedure AfficherBienvenue is
+   begin
+
+      Put_Line (" ");
+      Put_Line ("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+      Put_Line ("┃                                                    ┃");
+      Put_Line ("┃                   --------------                   ┃");
+      Put_Line ("┃                  / INTERPRETEUR \                  ┃");
+      Put_Line ("┃                  ----------------         Titouan  ┃");
+      Put_Line ("┃                                           Margot   ┃");
+      Put_Line ("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+      Put_Line (" ");
+
+   end AfficherBienvenue;
+
+   -----------------------
+   -- AfficherDebogueur --
+   -----------------------
+
+   procedure AfficherDebogueur is
+   begin
+
+      Put_Line (" ");
+      Put_Line ("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+      Put_Line ("┃                                                    ┃");
+      Put_Line ("┃              /!\ Débogueur activé /!\              ┃");
+      Put_Line (" ");
+      Put_Line
+        ("--> Voici les instructions sous forme de tableaux d'entiers : ");
+      Put_Line (" ");
+
+   end AfficherDebogueur;
+
+   -----------------------
+   -- AfficherExecuterDebogueur --
+   -----------------------
+
+   procedure AfficherExecuterDebogueur is
+      temp : Unbounded_String;
+   begin
+
+      Put_Line ("--> Appuyez sur entrée pour exécuter le code");
+      Skip_Line (1);
+      temp := Get_Line;
+
+   end AfficherExecuterDebogueur;
+
+   procedure AfficherResultats is
+   begin
+      Put_Line (" ");
+      Put_Line ("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+      Put_Line ("┃                                                    ┃");
+      Put_Line ("┃                     -----------                    ┃");
+      Put_Line ("┃                    / Résultats \                   ┃");
+      Put_Line ("┃                   ---------------                  ┃");
+      Put_Line ("┃                                                    ┃");
+      Put_Line ("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+      Put_Line (" ");
+   end AfficherResultats;
+
    ---------------------
-   -- ChoixFichier --
+   -- ChoixFichier -----
    ---------------------
 
    procedure ChoixFichier (chemin : out Unbounded_String) is
    begin
 
-      Put_Line ("Merci d'entrer le chemin du fichier sans guillemets");
-      chemin := get_line;
+      Put_Line ("--> Merci d'entrer le chemin du fichier sans guillemets");
+      chemin := Get_Line;
 
    end ChoixFichier;
 
    ---------------------
-   -- ChoixMode --
+   -- ChoixMode --------
    ---------------------
 
    function ChoixMode return Integer is
@@ -21,15 +85,15 @@ package body Menu is
       choix : Integer;
 
    begin
-
-      Put_Line ("Saisir 1 pour le mode normal ou 2 pour le mode debeugueur");
+      Put_Line
+        ("--> Saisir 1 pour le mode normal ou 2 pour le mode debogueur");
       Get (choix);
       return choix;
 
    end ChoixMode;
 
    ---------------------
-   -- ChoixSortir --
+   -- ChoixSortir ------
    ---------------------
 
    function ChoixSortir return Integer is
@@ -37,9 +101,8 @@ package body Menu is
       choix : Integer;
 
    begin
-
-      Put_Line
-        ("Saisir 1 pour sortir ou 2 pour executer un nouveau programme");
+      Put_Line ("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+      Put_Line ("--> Saisir 1 pour sortir ou 2 pour executer un nouveau programme");
       Get (choix);
       return choix;
 

@@ -62,9 +62,22 @@ package body Memoire_Code is
       return memoireCode.nbInstructions;
    end getNbInstructions;
 
-   -----------------------
+   -------------------------
    -- AfficherMemoireCode --
-   -----------------------
+   -------------------------
+
+   procedure AfficherMemoireCode (memoireCode : in T_Memoire_Code) is
+   begin
+      for i in 1 .. getNbInstructions (memoireCode) loop
+         Put (i'Image & " : ");
+         AfficherInstruction (GetInstruction (memoireCode, i));
+      end loop;
+      Put_Line(" ");
+   end AfficherMemoireCode;
+
+   -------------------------
+   -- AfficherInstruction --
+   -------------------------
 
    procedure AfficherInstruction (instruction : in T_Instruction) is
    begin
