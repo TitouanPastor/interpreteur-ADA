@@ -146,7 +146,6 @@ package body interpreteur is
                Boolean'Pos (EntierVersBool (x) and EntierVersBool (y)));
             -- Caractères
          when 27 =>
-            Put_Line (x'Image & " = " & y'Image);
             ModifierVariable
               (tas, GetCaseInstruction (instruction, 1), Boolean'Pos (x = y));
          when 32 =>

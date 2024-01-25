@@ -98,8 +98,26 @@ package Memoire_Code is
    -- Post => getNbInstructions'Result = memoireCode.NbInstructions;
    function getNbInstructions(memoireCode : in T_Memoire_Code) return Integer;
    
+   -- Nom fonction : AfficherMemoireCode
+
+   -- Sémantique : Affiche la mémoire du code intermédiaire
+
+   -- Paramètres :
+   --    - memoireCode : in T_Memoire_Code --> la mémoire du code intermédiaire
+
+   -- Pre  => memoire /= null,
+   -- Post => rien;
    procedure AfficherMemoireCode (memoireCode : in T_Memoire_Code);
    
+   -- Nom fonction : AfficherInstruction
+
+   -- Sémantique : Affiche une instruction
+
+   -- Paramètres :
+   --    - instruction : in T_Instruction --> l'instruction à afficher
+
+   -- Pre  => instruction /= null,
+   -- Post => rien;
    procedure AfficherInstruction(instruction : in T_Instruction);
 
 private
