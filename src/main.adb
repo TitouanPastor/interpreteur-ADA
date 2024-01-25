@@ -61,6 +61,7 @@ begin
 
       InitialiserMemoireCode (mem);
       InitialiserTas (tas);
+      mapVariable.Clear;
       cp := 1;
 
       -- Choix du fichier
@@ -106,18 +107,16 @@ begin
                -- B3 : Traiter le cas Lire(x)
                TraiterLire (GetInstruction (mem, cp), mapVariable, tas, cp);
             when (-5) =>
-               -- B3 : Traiter le cas Ecrire(x)
+               -- B4 : Traiter le cas Ecrire(x)
                TraiterEcrire (GetInstruction (mem, cp), mapVariable, tas, cp);
-
             when others =>
-               -- B4 : Traiter l'affectation
+               -- B5 : Traiter l'affectation
                TraiterAffectation (GetInstruction (mem, cp), tas, cp);
 
          end case;
 
-         -- Affichage de l'état de la mémoire
+         -- Affichage de l'état de la mémoire si le mode debogeur est activé
          if choixModeResult = 2 then
-            --Affichage de cp et de la memoire tas
             Put ("-> Cp = ");
             Put_Line (cp'Image);
 

@@ -8,7 +8,6 @@ package body tas is
    procedure InitialiserTas (tas : out T_Tas) is
    begin
       tas.nbElements := 0;
-
    end InitialiserTas;
 
    ---------------------

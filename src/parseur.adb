@@ -243,24 +243,24 @@ package body parseur is
      (mapVariable : in Variable_Hashed_Maps.Map; memCode : out T_Memoire_Code;
       tabMots     : in T_Mot)
    is
-      xString : Unbounded_String;
+      xString          : Unbounded_String;
       flagVar : Integer; -- le flag de type de la variable x dans lire(x)
       codeInstruction : Integer; -- le code de l'instruction, soit -4 si c'est lire, soit -5 si c'est écrire
       offsetParenthese : Integer; -- l'offset de la parenthèse ouvrante dans la chaine lire(x) ou écrire(x) (premier caractère de x)
    begin
-   -- On récupère si c'est lire ou écrire
+      -- On récupère si c'est lire ou écrire
       if To_String (tabMots.tabMotLigne (2)) (1 .. 4) = "lire" then
-         codeInstruction := -4;
+         codeInstruction  := -4;
          offsetParenthese := 6;
       else
-         codeInstruction := -5;
+         codeInstruction  := -5;
          offsetParenthese := 8;
       end if;
       -- On récupère le x dans la chaine lire(x)
       xString :=
         To_Unbounded_String
           (To_String (tabMots.tabMotLigne (2))
-           (offsetParenthese .. Length (tabMots.tabMotLigne (2)) - 1));
+             (offsetParenthese .. Length (tabMots.tabMotLigne (2)) - 1));
       -- On affecte le bon flag suivant le type de la variable
       case mapVariable.Element (To_String (xString)).TypeVar is
          when Integer_Type =>
@@ -273,8 +273,8 @@ package body parseur is
             null;
       end case;
       InsererInstruction
-        (memCode, codeInstruction, flagVar, mapVariable.Element (To_String (xString)).indiceTas,
-         0, 0, 0);
+        (memCode, codeInstruction, flagVar,
+         mapVariable.Element (To_String (xString)).indiceTas, 0, 0, 0);
    end ParserLireEcrire;
 
    procedure TraiterDeclarationsVariables
@@ -304,7 +304,7 @@ package body parseur is
          end if;
 
          i := 1;
-         -- Boucle qui parcoure tout le tableau de mots
+         -- Boucle qui parcours tout le tableau de mots
          -- On vérifie si on ets arrivé au bout des variables
          while tabMots.tabMotLigne (i) /= ":" loop
             AjouterVariable (tas, 0);
@@ -330,6 +330,7 @@ package body parseur is
             cntVar := cntVar + 1;
             i      := i + 1;
          end loop;
+         -- On récupère la ligne suivante
          LigneToTabMots (Fichier, tabMots);
       end loop;
 
@@ -354,7 +355,7 @@ package body parseur is
       -- Ouverture du fichier
       Open (Fichier, In_File, chemin);
 
-      --  Initialisation
+      -- A1 : Initialiser les variables
       InitialiserTabMot (tabMots);
       InitMapOperations (mapOperations);
 
@@ -362,14 +363,16 @@ package body parseur is
       while not End_Of_File (Fichier) and then tabMots.tabMotLigne (1) /= "Fin"
       loop
 
+   -- Pour chaque ligne, on récupère sous forme d'un tableau de mots les mots
          LigneToTabMots (Fichier, tabMots);
 
-      -- On traite la ligne courante
+      -- A2 : On traite la ligne courante
       -- Cas du programme avec la déclaration des variable à la ligne suivante
          if tabMots.tabMotLigne (1) = "Programme" then
 
+            -- Récupérer la ligne suivante
             LigneToTabMots (Fichier, tabMots);
-
+            -- On ajoute les variables au tas
             TraiterDeclarationsVariables (Fichier, tabMots, tas, mapVariable);
 
          end if;
@@ -387,34 +390,32 @@ package body parseur is
                -- OPERATION
                if mapVariable.Contains (To_String (tabMots.tabMotLigne (2)))
                then
-                  Put_Line ("-> OPE");
                   ParserOperation
                     (mapVariable, mapOperations, tabMots, memCode);
 
                   -- GOTO
                elsif tabMots.tabMotLigne (2) = To_Unbounded_String ("GOTO")
                then
-                  Put_Line ("-> GOTO");
                   ParserGoto (memCode, tabMots);
 
                   -- IF
                elsif tabMots.tabMotLigne (2) = To_Unbounded_String ("IF") then
-                  Put_Line ("-> IF");
                   ParserIf (mapVariable, memCode, tabMots);
 
                   -- NULL
                elsif tabMots.tabMotLigne (2) = To_Unbounded_String ("NULL")
                then
-                  Put_Line ("-> NULL");
                   ParserNull (memCode);
 
                   -- LIRE(X) & ECRIRE(X)
-               elsif To_String (tabMots.tabMotLigne (2)) (1 .. 4) = "lire" or To_String (tabMots.tabMotLigne (2)) (1 .. 6) = "ecrire" then
+               elsif To_String (tabMots.tabMotLigne (2)) (1 .. 4) = "lire" or
+                 To_String (tabMots.tabMotLigne (2)) (1 .. 6) = "ecrire"
+               then
                   ParserLireEcrire (mapVariable, memCode, tabMots);
                else
-                  Put_Line ("-> Non reconnu");
+                  Put_Line ("-> Opération non reconnue ");
                end if;
-
+               -- On récupère la ligne suivante
                LigneToTabMots (Fichier, tabMots);
             end loop;
             Put_Line ("######### Sortie instructions");

@@ -1,0 +1,26 @@
+-- teste toutes les implémentations de l'interpréteur
+-- Rentrez 16 à inputInt pour passer à la suite
+-- Rentrez 'a' à inputChar pour passer à la suite
+Programme TestAll est
+    a, b, inputInt : Entier
+    c : Booléen
+    d, inputChar : Caractère
+Début
+    1 a <- 2
+    2 b <- a * 8
+    3 ecrire(b)
+    4 c <- false
+    5 IF c GOTO 9
+    6 lire(inputInt)
+    7 c <- b = inputInt
+    8 GOTO 5
+    9 ecrire(c)
+    10 d <- 'a'
+    11 lire(inputChar)
+    12 c <- d = inputChar
+    13 IF c GOTO 17
+    14 lire(inputChar)
+    15 c <- d = inputChar
+    16 GOTO 13
+    17 NULL
+Fin
