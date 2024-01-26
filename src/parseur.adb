@@ -1,26 +1,26 @@
 package body parseur is
 
---------------------
+	-----------------------
    -- InitialiserTabMot --
-   --------------------
+   -----------------------
 
    procedure InitialiserTabMot (TabMot : out T_Mot) is
    begin
       TabMot.nbElements := 0;
    end InitialiserTabMot;
 
-   --------------------
+   -----------------------
    -- InitialisercntVar --
-   --------------------
+   -----------------------
 
    procedure InitialisercntVar (cntVar : out Integer) is
    begin
       cntVar := 1;
    end InitialisercntVar;
 
-   --------------------
+   ---------------------
    -- InitialiserDico --
-   --------------------
+   ---------------------
 
    procedure InitialiserDico (Map : out Integer_Hashed_Maps.Map) is
    begin
@@ -31,6 +31,7 @@ package body parseur is
    -- LigneToTabMot --
    --------------------
 
+   -- Fonction qui permet de transformer une ligne en tableau de mots
    procedure LigneToTabMots (Fichier : in out File_Type; tabMot : out T_Mot) is
       Mot           : Unbounded_String;
       ligneCourante : Unbounded_String;
@@ -64,6 +65,11 @@ package body parseur is
       end if;
    end LigneToTabMots;
 
+   -----------------------
+   -- InitMapOperations --
+   -----------------------
+
+   -- Fonction qui permet d'initialiser le dictionnaire des opérations
    procedure InitMapOperations (map : out Integer_Hashed_Maps.Map) is
    begin
       map.Include ("+", 1);
@@ -83,6 +89,11 @@ package body parseur is
 
    end InitMapOperations;
 
+   ---------------------
+   -- ParserOperation --
+   ---------------------
+
+   -- Fonction qui permet de parser une ligne d'opération afin de la transformer en une ligne d'entiers
    procedure ParserOperation
      (mapVariable   : in     Variable_Hashed_Maps.Map;
       mapOperations : in     Integer_Hashed_Maps.Map; tabMots : in T_Mot;
@@ -94,7 +105,6 @@ package body parseur is
       offsetOperation : Integer; -- Offset qui permet de construire le code de l'opération en fonction du type
    begin
       offsetOperation := 0;
-
       --On regarde si la valeur est une constante boolénne
       if To_String (tabMots.tabMotLigne (4)) = "false" then
          xflag := 4;
@@ -105,10 +115,8 @@ package body parseur is
 
       -- On regarde si la première opérande est entourée de quote de type 'X'
       elsif To_String (tabMots.tabMotLigne (4)) (1) = ''' then
-
          xflag           := 2;
          offsetOperation := 20;
-
          x := Character'Pos (To_String (tabMots.tabMotLigne (4)) (2));
 
          -- Si non constante caractère, on regarde si la première opérande est une constante d'un autre type ou une variable
@@ -116,30 +124,19 @@ package body parseur is
 
          case mapVariable.Element (To_String (tabMots.tabMotLigne (4))).TypeVar
          is
-
             when Integer_Type =>
-
                xflag           := 1;
                offsetOperation := 0;
-
             when Character_Type =>
-
                xflag           := 3;
                offsetOperation := 20;
-
             when Boolean_Type =>
-
                xflag := 5;
-
             when others =>
-
                null;
-
          end case;
-
          x :=
            mapVariable.Element (To_String (tabMots.tabMotLigne (4))).indiceTas;
-
       else
          x     := Integer'Value (To_String (tabMots.tabMotLigne (4)));
          xflag := 0;
@@ -175,10 +172,12 @@ package body parseur is
 
             end if;
 
+            -- On transforme la constante caractère en entier (code ascii)
             if yflag = 2 then
 
                y := Character'Pos (To_String (tabMots.tabMotLigne (6)) (2));
 
+            -- On transforme la constante booléenne en entier (0 ou 1)
             elsif yflag = 4 then
                if To_String (tabMots.tabMotLigne (6)) = "false" then
                   y := 0;
@@ -189,6 +188,7 @@ package body parseur is
             end if;
 
          end if;
+         -- On insère l'instruction dans la mémoire
          InsererInstruction
            (memCode,
             mapVariable.Element (To_String (tabMots.tabMotLigne (2)))
@@ -200,6 +200,11 @@ package body parseur is
       end if;
    end ParserOperation;
 
+   ----------------
+   -- ParserGoto --
+   ----------------
+
+   -- Fonction qui permet de parser une ligne de type GOTO X
    procedure ParserGoto (memCode : out T_Memoire_Code; tabMots : in T_Mot) is
    begin
       InsererInstruction
@@ -207,6 +212,11 @@ package body parseur is
          0, 0, 0);
    end ParserGoto;
 
+   --------------
+   -- ParserIf --
+   --------------
+
+   -- Fonction qui permet de parser une ligne de type IF X = Y GOTO Z
    procedure ParserIf
      (mapVariable : in Variable_Hashed_Maps.Map; memCode : out T_Memoire_Code;
       tabMots     : in T_Mot)
@@ -226,11 +236,21 @@ package body parseur is
       end if;
    end ParserIf;
 
+   ----------------
+   -- ParserNull --
+   ----------------
+
+   -- Fonction qui permet de parser une ligne de type NULL
    procedure ParserNull (memCode : out T_Memoire_Code) is
    begin
       InsererInstruction (memCode, -3, 0, 0, 0, 0, 0);
    end ParserNull;
 
+   ----------------------
+   -- ParserLireEcrire --
+   ----------------------
+
+   -- Fonction qui permet de parser une ligne de type lire(x) ou écrire(x)
    procedure ParserLireEcrire
      (mapVariable : in Variable_Hashed_Maps.Map; memCode : out T_Memoire_Code;
       tabMots     : in T_Mot)
@@ -264,11 +284,17 @@ package body parseur is
          when others =>
             null;
       end case;
+      -- On insère l'instruction dans la mémoire
       InsererInstruction
         (memCode, codeInstruction, flagVar,
          mapVariable.Element (To_String (xString)).indiceTas, 0, 0, 0);
    end ParserLireEcrire;
 
+   ----------------------------------
+   -- TraiterDeclarationsVariables --
+   ----------------------------------
+
+   -- Fonction qui permet de traiter les déclarations de variables
    procedure TraiterDeclarationsVariables
      (Fichier     : in out File_Type; tabMots : in out T_Mot; tas : out T_Tas;
       mapVariable : in out Variable_Hashed_Maps.Map)
@@ -326,6 +352,7 @@ package body parseur is
    -- FichierToMemoire --
    ----------------------
 
+   -- Fonction qui permet de transformer un fichier de code intermédiaire en mémoire
    procedure FichierToMemoire
      (chemin      : in String; tas : out T_Tas; memCode : out T_Memoire_Code;
       mapVariable :    out Variable_Hashed_Maps.Map)

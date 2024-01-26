@@ -72,6 +72,9 @@ package body Menu is
    begin
 
       Put_Line ("--> Merci d'entrer le chemin du fichier sans guillemets");
+      Put_Line ("   *(Fichiers tests : testEntier.txt, testChar.txt, ");
+      Put_Line ("                      testBool.txt, testLireEcrire.txt,");
+      Put_Line ("                      testFact.txt, testAll.txt        )*");
       chemin := Get_Line;
 
    end ChoixFichier;

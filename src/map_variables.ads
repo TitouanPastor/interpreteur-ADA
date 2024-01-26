@@ -18,13 +18,12 @@ package Map_Variables is
       Hash     => Ada.Strings.Hash, Equivalent_Keys => "=");
    use Variable_Hashed_Maps;
 
-
    -- Nom fonction : AfficherMap
 
    -- Sémantique : Affiche toutes les variables contenues dans le dictionnaire
 
    -- Paramètres :
-   -- map : Variable_Hashed_Maps.Map in --> dictionnaire contenant les variables
+-- map : Variable_Hashed_Maps.Map in --> dictionnaire contenant les variables
 
    -- Pre : /
    -- Post : /
@@ -40,12 +39,13 @@ package Map_Variables is
    -- Sémantique : Renvoie le nom de la variable (clé) dont la valeur(indiceTas) est passée en paramètre
 
    -- Paramètres :
-   -- map : Variable_Hashed_Maps.Map in --> dictionnaire contenant les variables
-   -- Value : Integer in --> indiceTas de la variable dont on veut le nom
+-- map : Variable_Hashed_Maps.Map in --> dictionnaire contenant les variables
+-- Value : Integer in --> indiceTas de la variable dont on veut le nom
 
    -- Pre : Map.contains (Value)
    -- Post : /
-   function GetKeyFromValue (Map : Variable_Hashed_Maps.Map; Value : Integer) return Unbounded_String;
+   function GetKeyFromValue
+     (Map : Variable_Hashed_Maps.Map; Value : Integer) return Unbounded_String;
 
 private
 

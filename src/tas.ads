@@ -10,7 +10,6 @@ package tas is
       nbElements : Integer;  -- Nombre d'éléments actuellement dans le tas
    end record;
 
-
    -- Nom fonction : InitialiserTas
 
    -- Sémantique : Initialise le tas en mettant le nombre d'éléments à 0
@@ -21,7 +20,6 @@ package tas is
    -- Pre  => rien,
    -- Post => tas.nbElements = 0;
    procedure InitialiserTas (tas : out T_Tas);
-
 
    -- Nom fonction : AjouterVariable
 
@@ -35,7 +33,6 @@ package tas is
    -- Post => tas.nbElements = tas.nbElements'last + 1 & GetVariable (indice) = valeur;
    procedure AjouterVariable (tas : in out T_Tas; valeur : in Integer);
 
-
    -- Nom fonction : ModifierVariable
 
    -- Sémantique : Modifie la valeur d'une variable du tas
@@ -47,8 +44,8 @@ package tas is
 
    -- Pre  => 1 <= indice <= CAPACITE,
    -- Post => GetVariable (indice) = valeur;
-   procedure ModifierVariable (tas : in out T_Tas; indice : in Integer; valeur : in Integer);
-
+   procedure ModifierVariable
+     (tas : in out T_Tas; indice : in Integer; valeur : in Integer);
 
    -- Nom fonction : GetVariable
 

@@ -27,8 +27,9 @@ package body Map_Variables is
       -- Si c'est un type caractère alors on transforme l'entier en caractère
          if element.TypeVar = Character_Type then
             Put_Line
-              (Key (C) & " -> tas[" & element.indiceTas'Image & "]  = " &
-               Character'Val (GetVariable (tas, element.indiceTas)));
+              (Key (C) & " -> tas[" & element.indiceTas'Image & " ]  = " &
+                 Character'Val (GetVariable (tas, element.indiceTas)));
+            -- Si c'est un booléen
          elsif element.TypeVar = Boolean_Type then
             if GetVariable (tas, element.indiceTas) = 0 then
                boolString := To_Unbounded_String ("false");
@@ -36,11 +37,11 @@ package body Map_Variables is
                boolString := To_Unbounded_String ("true");
             end if;
             Put_Line
-              (Key (C) & " -> tas[" & element.indiceTas'Image & "]  = " &
+              (Key (C) & " -> tas[" & element.indiceTas'Image & " ]  = " &
                To_String(boolString));
          else
             Put_Line
-              (Key (C) & " -> tas[" & element.indiceTas'Image & "]  =" &
+              (Key (C) & " -> tas[" & element.indiceTas'Image & " ]  =" &
                GetVariable (tas, element.indiceTas)'Image);
          end if;
 

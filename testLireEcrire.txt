@@ -9,13 +9,13 @@ Début
     5 lire(a)
     6 ecrire(a)
     7 lire(a)
-    6 ecrire(e)
-    7 lire(e)
-    8 c <- 0
-    9 IF c GOTO 12
-    10 c <- b / a
-    11 GOTO 9
-    12 NULL
+    8 ecrire(e)
+    9 lire(e)
+    10 c <- 0
+    11 IF c GOTO 14
+    12 c <- b + a
+    13 GOTO 11
+    14 NULL
 Fin
 
 

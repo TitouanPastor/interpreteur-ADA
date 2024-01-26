@@ -16,21 +16,19 @@ package Memoire_Code is
    -- Définition du type T_Memoire qui représente la mémoire globale utilisée pour stocker le code intermédiaire
    type T_Memoire_Code is record
       instructions_tab : T_Memoire_Code_Tab;
-      nbInstructions  : Integer; -- nbLignes >= 0
+      nbInstructions   : Integer; -- nbLignes >= 0
    end record;
-   
 
    -- Nom fonction : InitialiserMemoireCode
 
    -- Sémantique : Initialise la mémoire du code intermédiaire
 
    -- Paramètres :
-   --    - memoireCode : out T_Memoire_Code --> la mémoire du code intermédiaire
+--    - memoireCode : out T_Memoire_Code --> la mémoire du code intermédiaire
 
    -- Pre  => rien,
    -- Post => memoireCode.nbLignes = 0;
    procedure InitialiserMemoireCode (memoireCode : out T_Memoire_Code);
-
 
    -- Nom fonction : InsererInstruction
 
@@ -47,14 +45,14 @@ package Memoire_Code is
 
    -- Pre  => memoire /= null & memoire.nbElements < TAILLE_MEMOIRE_CODE,
    -- Post => memoire.nbElements = memoire.nbElements'last + 1;
-   procedure InsererInstruction(memoireCode : in out T_Memoire_Code; case1 : in Integer; 
-                                case2 : in Integer; case3 : in Integer; case4 : in Integer; 
-                                case5 : in Integer; case6 : in Integer);
-
+   procedure InsererInstruction
+     (memoireCode : in out T_Memoire_Code; case1 : in Integer;
+      case2       : in     Integer; case3 : in Integer; case4 : in Integer;
+      case5       : in     Integer; case6 : in Integer);
 
    -- Nom fonction : GetInstruction
 
-   -- Sémantique : Récupère une instruction dans la mémoire du code intermédiaire
+-- Sémantique : Récupère une instruction dans la mémoire du code intermédiaire
 
    -- Paramètres :
    --    - memoireCode : in out T_Memoire_Code --> la mémoire du code intermédiaire
@@ -65,15 +63,15 @@ package Memoire_Code is
 
    -- Pre  => memoire /= null & cp >= 0 & cp <= memoire.nbElements,
    -- Post => GetInstruction'Result /= null;
-   function GetInstruction(memoireCode : in T_Memoire_Code; cp : in Integer) return T_Instruction;
-
+   function GetInstruction
+     (memoireCode : in T_Memoire_Code; cp : in Integer) return T_Instruction;
 
    -- Nom fonction : GetCaseInstruction
 
    -- Sémantique : Récupère une case d'une instruction dans la mémoire du code intermédiaire
 
    -- Paramètres :
-   --    - memoireCode : in T_Instruction --> la ligne d'instruction à récupérer
+--    - memoireCode : in T_Instruction --> la ligne d'instruction à récupérer
    --    - indexCase : in Integer --> l'index de la case à récupérer
 
    -- retour :
@@ -81,8 +79,8 @@ package Memoire_Code is
 
    -- Pre  => memoire /= null & indexCase >= 0 & indexCase < TAILLE_LIGNE_INSTRUCTION,
    -- Post => GetCaseInstruction'Result /= null;
-   function GetCaseInstruction(instruction : in T_Instruction; indexCase : in Integer) return Integer;
-
+   function GetCaseInstruction
+     (instruction : in T_Instruction; indexCase : in Integer) return Integer;
 
    -- Nom fonction : getNbInstruction
 
@@ -96,8 +94,8 @@ package Memoire_Code is
 
    -- Pre  => memoire /= null,
    -- Post => getNbInstructions'Result = memoireCode.NbInstructions;
-   function getNbInstructions(memoireCode : in T_Memoire_Code) return Integer;
-   
+   function getNbInstructions (memoireCode : in T_Memoire_Code) return Integer;
+
    -- Nom fonction : AfficherMemoireCode
 
    -- Sémantique : Affiche la mémoire du code intermédiaire
@@ -108,7 +106,7 @@ package Memoire_Code is
    -- Pre  => memoire /= null,
    -- Post => rien;
    procedure AfficherMemoireCode (memoireCode : in T_Memoire_Code);
-   
+
    -- Nom fonction : AfficherInstruction
 
    -- Sémantique : Affiche une instruction
@@ -118,7 +116,7 @@ package Memoire_Code is
 
    -- Pre  => instruction /= null,
    -- Post => rien;
-   procedure AfficherInstruction(instruction : in T_Instruction);
+   procedure AfficherInstruction (instruction : in T_Instruction);
 
 private
 
@@ -126,6 +124,7 @@ private
    type T_Instruction is array (1 .. TAILLE_LIGNE_INSTRUCTION) of Integer;
 
    -- Définition du type T_Memoire_Code_Tab comme un tableau de T_Ligne de taille TAILLE_MEMOIRE_CODE
-   type T_Memoire_Code_Tab is array (1 .. TAILLE_MEMOIRE_CODE) of T_Instruction;
+   type T_Memoire_Code_Tab is
+     array (1 .. TAILLE_MEMOIRE_CODE) of T_Instruction;
 
 end Memoire_Code;

@@ -12,38 +12,6 @@ with Ada.Strings.Unbounded.Text_IO; use Ada.Strings.Unbounded.Text_IO;
 
 procedure main is
 
-   --  Programme Test est
-   --      a,b,c : Entier
-   --  Début
-   --      1 a <- 2
-   --      2 b <- 2 * 8
-   --      3 c <- 0
-   --      4 IF c GOTO 7
-   --      5 c <- b / a
-   --      6 GOTO 4
-   --      7 NULL
-   --  Fin
-   procedure GenererMemoires
-     (memoireCode : out T_Memoire_Code; tas : out T_Tas)
-   is
-   begin
-      InitialiserTas (tas);
-      InitialiserMemoireCode (memoireCode);
-      -- Ajout des variables dans le tas (a,b,c)
-      AjouterVariable (tas, 0);
-      AjouterVariable (tas, 0);
-      AjouterVariable (tas, 0);
-      -- Ajout des instructions dans la mémoire code
-      InsererInstruction (memoireCode, 1, 0, 2, 5, 0, 0);
-      InsererInstruction (memoireCode, 2, 0, 2, 3, 0, 8);
-      InsererInstruction (memoireCode, 3, 0, 0, 5, 0, 0);
-      InsererInstruction (memoireCode, -2, 1, 3, -1, 0, 7);
-      InsererInstruction (memoireCode, 3, 1, 2, 4, 1, 1);
-      InsererInstruction (memoireCode, -1, 0, 4, 0, 0, 0);
-      InsererInstruction (memoireCode, -3, 0, 0, 0, 0, 0);
-
-   end GenererMemoires;
-
    mem               : T_Memoire_Code;
    tas               : T_Tas;
    cp                : Integer;
@@ -85,7 +53,7 @@ begin
 
          -- Affichage débogueur de l'instruction courante
          if choixModeResult = 2 then
-            Put ("-> Après exécution instruction label : Cp = ");
+            Put ("-> Après exécution instruction de label Cp = ");
             Put_Line (cp'Image);
          end if;
 

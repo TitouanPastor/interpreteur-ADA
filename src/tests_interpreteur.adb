@@ -28,7 +28,7 @@ procedure tests_interpreteur is
       mem : T_Memoire_Code;
       tas : T_Tas;
    begin
-      InitialiserTas(tas);
+      InitialiserTas (tas);
       InitialiserMemoireCode (mem);
       -- la condition est valide (> 0 dans la troisième case)
       InsererInstruction (mem, -2, 0, 8, -1, 0, 5);
@@ -80,4 +80,6 @@ begin
    test_TraiterIF;
    test_TraiterAffectation;
    test_TraiterNULL;
+   -- On ne peux pas vraiment tester lire et écrire car cela nécessite
+   -- une action utilisateur, nous avons donc testé nous même tout les cas possibles
 end tests_interpreteur;

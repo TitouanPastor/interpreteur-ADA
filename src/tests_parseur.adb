@@ -21,7 +21,7 @@ procedure tests_parseur is
       InitialiserMemoireCode (mem);
       InitialiserTas (tas);
 
-      FichierToMemoire ("testBool.txt", tas, mem, mapVariable);
+      FichierToMemoire ("testEntier.txt", tas, mem, mapVariable);
       Assert(GetCaseInstruction(GetInstruction(mem, 1),1) = 1, "Erreur test_FichierToMemoire");
       Assert(GetCaseInstruction(GetInstruction(mem, 1),2) = 0, "Erreur test_FichierToMemoire");
       Assert(GetCaseInstruction(GetInstruction(mem, 1),3) = 2, "Erreur test_FichierToMemoire");
@@ -44,8 +44,9 @@ procedure tests_parseur is
       Assert(GetCaseInstruction(GetInstruction(mem, 3),6) = 0, "Erreur test_FichierToMemoire");
 
       Assert(GetCaseInstruction(GetInstruction(mem, 4),1) = -2, "Erreur test_FichierToMemoire");
-      Assert(GetCaseInstruction(GetInstruction(mem, 4),2) = 1, "Erreur test_FichierToMemoire");
+      Assert(GetCaseInstruction(GetInstruction(mem, 4),2) = 5, "Erreur test_FichierToMemoire");
       Assert(GetCaseInstruction(GetInstruction(mem, 4),3) = 3, "Erreur test_FichierToMemoire");
+      Assert(GetCaseInstruction(GetInstruction(mem, 4),4) = 0, "Erreur test_FichierToMemoire");
       Assert(GetCaseInstruction(GetInstruction(mem, 4),5) = 0, "Erreur test_FichierToMemoire");
       Assert(GetCaseInstruction(GetInstruction(mem, 4),6) = 7, "Erreur test_FichierToMemoire");
 
@@ -69,6 +70,7 @@ procedure tests_parseur is
       Assert(GetCaseInstruction(GetInstruction(mem, 7),4) = 0, "Erreur test_FichierToMemoire");
       Assert(GetCaseInstruction(GetInstruction(mem, 7),5) = 0, "Erreur test_FichierToMemoire");
       Assert(GetCaseInstruction(GetInstruction(mem, 7),6) = 0, "Erreur test_FichierToMemoire");
+      
    end test_FichierToMemoire;
 
 begin
