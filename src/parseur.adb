@@ -39,7 +39,6 @@ package body parseur is
       InitialiserTabMot (tabMot);
       -- On récupere la ligne courante
       Get_Line (Fichier, ligneCourante);
-      Put_Line (ligneCourante);
       -- Parcourir la ligne et extraire les mots
       for Index in 1 .. Length (ligneCourante) loop
          -- Si le caractère n'est pas un espace, ajouter au mot temporaire
@@ -63,13 +62,6 @@ package body parseur is
          tabMot.tabMotLigne (tabMot.nbElements + 1) := Mot;
          tabMot.nbElements                          := tabMot.nbElements + 1;
       end if;
-
-      --Affichage du tableau de mots
-      for Index in 1 .. tabMot.nbElements loop
-         Put (Index'Image & " : ");
-         Put_Line (tabMot.tabMotLigne (Index));
-      end loop;
-
    end LigneToTabMots;
 
    procedure InitMapOperations (map : out Integer_Hashed_Maps.Map) is
@@ -286,7 +278,6 @@ package body parseur is
       tempNomVar : Unbounded_String;
       enumType   : Enum_Type;
    begin
-      Put_Line ("######### Dans la déclaration des variables");
       InitialisercntVar (cntVar);
       while tabMots.tabMotLigne (1) /= "Début" loop
          -- Insertion du type dans le dictionnaire de variable
@@ -323,18 +314,12 @@ package body parseur is
                  (To_String (tempNomVar) (1 .. Length (tempNomVar) - 1),
                   (cntVar, enumType));
             end if;
-            Put ("Ajout de " & tempNomVar);
-            Put (" à l'indice " & cntVar'Image);
-            Put (" : " & enumType'Image);
-            Put_Line (" ");
             cntVar := cntVar + 1;
             i      := i + 1;
          end loop;
          -- On récupère la ligne suivante
          LigneToTabMots (Fichier, tabMots);
       end loop;
-
-      Put_Line ("######### Sortie déclaration variables");
    end TraiterDeclarationsVariables;
 
    ----------------------
@@ -379,8 +364,6 @@ package body parseur is
 
          -- Cas du programme avec les instructions
          if tabMots.tabMotLigne (1) = "Début" then
-
-            Put_Line ("######### Dans les instructions");
             LigneToTabMots (Fichier, tabMots);
 
             while tabMots.tabMotLigne (1) /= "Fin" loop
@@ -418,41 +401,8 @@ package body parseur is
                -- On récupère la ligne suivante
                LigneToTabMots (Fichier, tabMots);
             end loop;
-            Put_Line ("######### Sortie instructions");
          end if;
       end loop;
-
-      -- Affichage de la map dico_entiers
-      Put_Line ("####################################");
-      Put_Line (" ");
-      Put_Line ("Affichage de la map mapVariable : ");
-      Put_Line (" ");
-
-      AfficherMap (mapVariable);
-
-      Put_Line ("####################################");
-      Put_Line (" ");
-      Put_Line ("Affichage du tas : ");
-      Put_Line (" ");
-
-      -- Affichage du tas
-      for i in 1 .. GetNbElements (tas) loop
-         Put_Line (i'Image & " : " & GetVariable (tas, i)'Image);
-      end loop;
-
-      Put_Line ("####################################");
-      Put_Line (" ");
-      Put_Line ("Affichage de la mémoire de code : ");
-
-      -- Affichage de la mémoire de code
-      for i in 1 .. getNbInstructions (memCode) loop
-         Put (i'Image & " : ");
-         AfficherInstruction (GetInstruction (memCode, i));
-      end loop;
-
-      Put_Line ("####################################");
-      Put_Line (" ");
-
       -- Fermeture du fichier
       Close (File => Fichier);
 
